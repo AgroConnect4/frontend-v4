@@ -1,0 +1,79 @@
+/* EditarPerfil.module.css */
+
+/* EditarPerfil.module.css */
+
+.btn-adicionar{
+margin-right: 3%;
+}
+
+.container {
+
+    max-width: 800px; /* Largura máxima do container */
+    margin: 80px auto 0; /* Margem superior aumentada para evitar sobreposição com a navbar */
+    padding: 20px; /* Espaçamento interno */
+    background-color: #f7f9fa; /* Fundo suave */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    font-family: Arial, sans-serif; /* Fonte limpa e moderna */
+    position: relative; /* Define a posição relativa para o z-index funcionar */
+    z-index: 1; /* Garante que o container fique acima de outros elementos */
+  }
+  
+  
+  h1 {
+    color: #333; /* Cor do texto do título */
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
+  }
+  
+  label {
+    display: block; /* Faz o label ocupar a largura total */
+    margin: 15px 0 5px; /* Margens para espaçamento */
+    font-weight: bold; /* Texto em negrito */
+  }
+  
+  input[type="text"],
+  textarea,
+  input[type="file"] {
+    width: 100%; /* Largura total */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #ccc; /* Borda leve */
+    border-radius: 4px; /* Bordas arredondadas */
+    margin-bottom: 15px; /* Espaçamento abaixo do campo */
+    font-size: 14px; /* Tamanho da fonte */
+  }
+  
+  textarea {
+    min-height: 100px; /* Altura mínima para a textarea */
+    resize: vertical; /* Permite redimensionamento vertical */
+  }
+  
+  .produto-item {
+    display: flex; /* Flexbox para alinhar os itens */
+    align-items: center; /* Alinha verticalmente */
+    gap: 10px; /* Espaçamento entre os campos */
+  }
+  
+  button {
+    background-color: #007bff; /* Cor do botão */
+    color: white; /* Cor do texto do botão */
+    padding: 10px 15px; /* Espaçamento interno do botão */
+    border: none; /* Remove a borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor pointer para interação */
+    font-size: 16px; /* Tamanho da fonte do botão */
+    transition: background-color 0.3s; /* Transição suave para a cor de fundo */
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Cor de fundo ao passar o mouse */
+  }
+  
+  h3 {
+    margin-top: 20px; /* Margem superior para separar seções */
+    color: #333; /* Cor do texto do subtítulo */
+  }
+  
+  .btn-salvar {
+    margin-top: 20px; /* Espaçamento acima do botão Salvar */
+  }
+  

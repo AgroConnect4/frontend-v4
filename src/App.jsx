@@ -14,6 +14,7 @@ import CriarPubli from "./pages/CriarPubli/CriarPubli";
 import ProtectedRoute from '../src/Firebase/ProtectedRoute';
 import EditarPubli from "./pages/EditarPubli/EditarPubli";
 import DashBoard from "./pages/DashBoard/DashBoard";
+import EditarPerfil from "./pages/EditarPerfil/EditarPerfil"; 
 
 import { AuthProvider } from '../src/Firebase/AuthContext';
 
@@ -36,20 +37,19 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<Home publicacoesRef={publicacoesRef} categoria={categoria} />} />
-          <Route path="/perfil" element={< Perfil/>} />
+          <Route path="/perfil" element={<Perfil />} />
           <Route path="/postcompleto" element={<PostCompleto />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/criar" element={<CriarPubli />} />
           <Route path="/editar" element={<EditarPubli />} />
           <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/editarperfil" element={<EditarPerfil />} /> 
         </Routes>
       </div>
       </BrowserRouter>
     </AuthProvider>
   );
 };
-
-
 
 export default App;
