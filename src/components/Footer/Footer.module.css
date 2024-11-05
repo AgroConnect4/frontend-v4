@@ -1,0 +1,73 @@
+div.rodape{
+    color: #FFFF;
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.rodape img{
+    width: 100px;
+    height: 100px;
+    border-radius: 100% ;
+    
+}
+
+div.rodape h1, h2, h3{
+    font-size: large;
+}
+
+div.rodape div.rodape-box{
+    float: right;
+    display: block;
+}
+div.rodape div.rodape-box ul{
+    display: inline;
+}
+div.rodape div.rodape-box ul li{
+    padding-left: 15px;
+    font-size: 20px;
+    display: inline;
+    align-content: center;
+    list-style: disc;
+}
+
+div.rodape div.rodape-box ul li a:hover{
+    color: rgb(128, 128, 128);
+}
+
+div.rodape div.rodape-box li a{
+    color: rgb(122, 122, 122);
+    text-decoration: none;
+    align-items: center;
+    list-style: disc;
+}
+
+
+.rodape {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;    /* Centraliza verticalmente */
+    height: 100px;          /* Ajusta a altura do contêiner para 100% da altura da janela */
+    border: 1px solid black; /* Apenas para visualização */
+}
+
+.rodape a, .rodape h1, .rodape-box {
+    margin: 0 10px; 
+}
+
+.rodape-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.rodape-box ul li {
+    margin-right: 10px;
+}
+
+.rodape-box ul h2, .rodape-box ul h3 {
+    margin: 0 10px;
+}

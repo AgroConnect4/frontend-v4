@@ -1,0 +1,104 @@
+.input-valid {
+  border-color: #28a745;
+}
+
+.input-invalid {
+  border-color: #dc3545;
+}
+
+
+.containerLogin {
+  background: url("/src/assets/pl.png") lightgray 100% / cover no-repeat;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 983px;
+  height: 474px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.70);
+  margin: auto; 
+  margin-left: 5%;
+  margin-top: 10%;
+}
+.card{
+  background-color: rgba(240, 248, 255, 0.637);
+}
+
+.formTitle {
+  margin-bottom: -5px;
+  color: #04AB07;
+  font-size: 50px;
+  text-align: center; /* Alinha o texto ao centro */
+}
+
+input.form-control {
+  width: 90%;
+  padding: 10px;
+  margin: 10px auto; /* Centraliza os inputs horizontalmente */
+  display: block; /* Faz os inputs ocuparem uma linha inteira */
+  border: 1px solid #ddd;
+  border-radius: 20px;
+}
+
+.submitButton {
+  width: 70%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  display: block; /* Faz o botão ocupar uma linha inteira */
+  margin: 10px auto; /* Centraliza o botão horizontalmente */
+}
+
+.loginLink {
+  text-align: center;
+  display: block;
+  margin-top: 10px;
+  text-decoration: none;
+  color: black;
+}
+
+.loginLink span {
+  color: #007bff;
+}
+
+.form-container input::placeholder {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+}
+
+
+
+/*
+
+.btn-primary {
+  width: 70%;
+  background-color: #4CAF50; 
+  border: none; 
+  color: white; 
+  padding: 10px;
+  text-align: center; 
+  text-decoration: none;
+ 
+  font-size: 16px;
+  display: block; 
+  margin: 10px auto;
+  transition-duration: 0.4s; 
+  cursor: pointer; 
+  border-radius: 20px; 
+}
+
+.btn-primary:hover {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50; 
+}
+*/
