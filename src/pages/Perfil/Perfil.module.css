@@ -1,320 +1,126 @@
-.center{
-    text-align: center;
-}
 .container {
-    display: flex;
-    align-items: flex-start;
-    margin-top: 7%;
-    flex-wrap: wrap;
-}
-
-.nome-parceiroSobre{
-padding-top: 3%;
-    margin-bottom: 5%;
-    text-align: center;
-}
-
-    .sobre-parceiro{
-        font-weight: 700;
-        margin-left: 10%; 
-        margin-right: 10%;
-       font-size: 25px;
-      
-    }
-
-.container-disponivel {
-    background-color: rgb(255, 255, 255);
-    width: 600px;
-    height: 750px;
-    border-radius: 2%;
-    margin-left: 60px;
-}
-
-.banner {
-    background-color: #04ab0769;
-    width: 1000px;
-    height: 200px;
-    border-radius: 10px 10px 0 0;
-    margin-left: 10%;
-}
-.fundo-banner {
-    background-color: #ffffff;
-    width: 1000px;
-    height: 550px;
-    border-radius: 0 0 10px 10px;
-  margin-top: -20px;
-}
-
-.Fundo-foto {
-    background-color: #053706;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    margin-left: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    top: 30%;
-    cursor: pointer;
-}
-
-.foto {
-    width: 170px;
-    height: 170px;
-    border-radius: 50%;
-}
-
-.icones {
-    display: flex;
-    align-items: center;
-    position: relative;
-    left: 35%;
-    margin-top: -6%;
-    transition: transform 0.3s ease-in-out; /* Transição suave para o movimento dos ícones */
-}
-
-.icone {
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    margin-left: 20px;
-    transition: transform 0.3s ease-in-out; /* Transição suave para o movimento dos ícones */
-}
-
-/* Quando o mouse passa por cima dos ícones, aplicamos uma escala menor */
-.icone:hover {
-    transform: scale(0.9);
-}
-
-
-.icone-editar {
-    margin-top: -1%;
-    margin-left: 94%;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-}
-
-.ler-maisSobre {
-    background: #ffffff;
-    color: #04ab07;
-    border: none;
-   margin-left: 80%;
-
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    font-family: Arial, sans-serif;
   }
   
-  .ler-maisSobre:hover {
-    background-color: #ffffff;
+
+
+
+  
+  .banner {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background-image: url("https://avatars.mds.yandex.net/i?id=26b1c76df73eac5820c6b6a4147dd7eb1c10750d-12521952-images-thumbs&n=13");
   }
   
-  .criar{
-    background-color: #0075D2;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    margin-left: 82%;
+  .coverPhoto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px; /* Opção para cantos arredondados, se preferir */
   }
-
-.two-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.titulo-container {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.titulo {
-    text-align: center;
-    margin-bottom: 15%;
-}
-
-.produto-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-.produto {
+  
+  .profilePhotoContainer {
     width: 100px;
     height: 100px;
-    cursor: pointer;
-    margin-bottom: 10%;
-}
-
-.produto-nome {
-    display: none;
     position: absolute;
-    bottom: 200px;
-    left:76%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 20px;
-}
-
-
-
-/*Publicação*/
-hr{
-    color: black;
-}
-.estrutura {
-    min-height: 700px;
-    max-height: 1000px;
-    width: 500px;
-    border: 2px solid black;
-    margin: 50px auto;
-    border-radius: 5px;
-    overflow: hidden;
-    background: #ffffff;
-}
-
-.logo-parceiros {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-size: cover;
-    position: absolute;
-    margin-top: 30px;
-    margin-left: 15px;
-    transform: translateY(-50%);
-}
-
-.nome-parceiro, .tipo-parceiro {
-    margin-left: 85px;
-    font-size: 20px;
-    margin-top: 30px;
-    color: black;
-}
-
-.tipo-parceiro {
-   
-    font-size: 14px;
-    margin-top: -15px;
+    bottom: -70px;
+    left: 20px;
+  }
   
-}
-
-.pontinhos {
-    align-items: end t;
-    width: 7% ;
-    margin-top: -60px ;
-    margin-left: 90% ;
-    cursor: pointer ;
-}
-
-.texto-parceiros {
-    margin-left: 40px;
-    margin-right: 20px;
-    max-height: 100px; 
-    overflow: hidden;
-   transition: max-height 0.5s ease;
-}
-
-.ler-mais
- {
+  .profilePhoto {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Faz a imagem ser circular */
+    border: 3px solid white;
+    object-fit: cover; /* Mantém a proporção da imagem */
+  }
+  
+  .editIcon {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
-    color: green;
-    text-align: end;
-    margin-right: 20px;
-}
-
-.imagem-parceiros {
-    width: 100%;
-    height: 40%;
-    margin-bottom: 20px;
-    border-radius: 5px;
-}
-
-.botoes-container {
+  }
+  
+  .profileInfo {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px;
-}
-
-.curtirFavoritar {
-    width: 30px;
-    height: 30px;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .userName {
+    margin-top: 50px;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  
+  .aboutSection {
+    padding: 20px;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .readMoreBtn {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  .postsSection {
+    padding: 20px;
+  }
+  
+  .post {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #f9f9f9;
+  }
+  
+  .postHeader {
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
-    margin-left: 5px;
-}
-
-.btn-saibamais {
-    background-color: #A63232;
-    color: rgb(255, 255, 255);
-    border-style: none;
+  }
+  
+  .postHeader img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Faz a imagem ser circular */
+    margin-right: 10px;
+  }
+  
+  .coverPhotoLabel {
     cursor: pointer;
-    border-radius: 5px;
-    font-size: medium;
-   
-    padding-top: 5px;
-    padding-bottom: 5px;
-   
-    font-size: 20px;
-   
+    display: block;
+  }
   
-}
-
-
-
-.post-textos {
-    color: white !important;
-}
-
-.curso-pointer {
+  .profilePhotoContainer label {
     cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.zoom-in:hover {
-    transform: scale(1.2);
-}
-
-
-
-
-@media only screen and (max-width: 768px) {
-    .nome-parceiroSobre{
-        padding-top: 10%;
-        font-size: 25px;
-        }
-        .sobre-parceiro{
-          
-           font-size: 15px;
-          
-        }
+  }
   
-    .container-disponivel {
-      width: 100%; /* Alterando a largura para ocupar toda a largura disponível */
-      margin-left: 0; /* Removendo a margem esquerda */
-      margin-top: 70%; /* Adicionando margem superior para espaçamento */
-    }
+  /* Ajuste para as imagens de banner */
+  .bannerPhoto,
+  .coverPhoto,
+  .profilePhoto {
+    border-radius: 50%; /* Aplica o arredondamento a todas as imagens */
+  }
   
-    .banner {
-      width: 80%; /* Alterando a largura para ocupar toda a largura disponível */
-      margin-left: 5%; /* Removendo a margem esquerda */
-    }
-  
-    .fundo-banner {
-      width: 100%; /* Alterando a largura para ocupar toda a largura disponível */
-      margin-left: 0; /* Removendo a margem esquerda */
-      margin-top: -50px; /* Mantendo o espaçamento superior */
-    height: 180%;
-    }
+  .bannerPhoto {
+    width: 100%;
+    height: 200px; /* Defina a altura do banner */
+    object-fit: cover;
+    border-radius: 10px; /* Mantém uma aparência arredondada */
   }
   
