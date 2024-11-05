@@ -1,0 +1,94 @@
+/* NavBar */
+.navbar {
+  transition: background-color 0.5s ease, border-bottom 0.5s ease;
+}
+
+
+/* Adicione estas regras no seu arquivo CSS de módulos */
+
+/* Estilos para itens da navbar em tema escuro */
+.theme-escuro .nav-link {
+  color: #ffffff !important; /* Cor branca para os itens da navbar */
+}
+.theme-escuro .navbar-toggler-icon {
+  color: #ffffff !important; /* Cor branca para o ícone do botão de menu */
+}
+
+.navbar-light.bg-transparent {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+.navbar-light.bg-light {
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(200, 200, 200, 0.8);
+}
+
+.menu {
+  list-style-type: none;
+  display: flex;
+  align-items: center; /* Alinhar itens verticalmente */
+  margin: 0;
+  padding: 0;
+}
+
+.agroconnect {
+  color: rgb(0, 0, 0);
+  padding-left: 7%;
+  font-weight: 700;
+  position: fixed;
+}
+
+.top-bar {
+  background-color: transparent; /* Cor de fundo transparente */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000; 
+}
+
+.navbarLogo {
+  width: 16vh;
+}
+
+.iconLarge {
+  font-size: 24px;
+  color: #8cc443;
+}
+
+.top-bar h4 {
+  color: rgb(0, 0, 0);
+  margin-top: 15px;
+  margin-left: 0; /* Alterado para alinhar o h4 à esquerda */
+  font-weight: 700;
+}
+
+
+
+/*------ Responsivo ------*/
+/* Media queries para tornar o estilo responsivo */
+@media screen and (max-width: 798px) {
+  .menu li {
+    margin-right: 10px; /* Reduz a margem entre os itens do menu em telas menores */
+  }
+
+  .logo {
+    width: 120px; /* Reduz o tamanho da logo em telas menores */
+  }
+
+  .top-bar h4 {
+    color: rgb(0, 0, 0);
+    margin-top: 15px;
+    margin-left: -100px;
+    font-size: 20px;
+    font-family: "Salsa", cursive;
+    font-weight: 400;
+    font-style: normal;
+  }
+}

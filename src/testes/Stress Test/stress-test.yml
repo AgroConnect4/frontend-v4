@@ -1,0 +1,9 @@
+config: 
+  target:"http://localhost:5173" #aqui é a porta em que estamos usando para subir a aplicação 
+phases:
+    - duration: 60   #o tempo que o teste irá rodar, em segundos
+      arrivelrate: 50 #numero de usuarios virtuais por segundos
+scenarios:
+    -flow :
+      -get:
+        url: "/noticacao" #caminho para o endpoint do nosso componente

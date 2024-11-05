@@ -1,0 +1,136 @@
+
+.input-valid {
+    border-color: #28a745;
+}
+
+.input-invalid {
+    border-color: #dc3545;
+}
+
+ 
+.fundoIMG{
+    background: url("/public/img/criarEditar.jpg") lightgray 100% / cover no-repeat;
+  
+    height: 100vh;
+}
+div.container-publicacao{
+   
+    width: 1275px;
+    height: 600px;
+    padding: 25px;
+    padding-top: 9%;
+    display: flex;
+    margin: auto;
+    margin-bottom: 75px;
+}
+
+div div.box-publicacao{
+    width: 500px;
+    height: 500px;
+    margin: auto;
+    display: block;
+    background-color:rgba(255, 255, 255, .5) ;
+    padding: 15px;
+    border-radius: 25px;
+}
+div.titulo-publicacao{
+    display: inline;
+
+}
+
+div.titulo-publicacao h1{
+    font-size: 30px;
+    color: green;
+    font-weight: 600;
+    text-align: center;
+    margin-top: -40px;
+    margin-right: 50px;
+}
+div.titulo-publicacao img{
+    height: 35px;
+    border-radius: 100%;
+    background-color: 0,0,0,0;
+    align-content: flex-start;
+}
+.nomesCampos{
+    font-size: 20px;
+}
+
+/*CAMPO UPLOAD*/
+
+.input-upload {
+    display: block; 
+    width: 100%; 
+    padding: 8px;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #555;
+    border: 1px solid #dddddd00;
+    border-radius: 4px;
+    background-color: #f9f9f980;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.input-upload:hover {
+    border-color: #88888800;
+}
+
+.input-upload:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 4px rgba(74, 144, 226, 0.5);
+}
+
+
+
+form label{
+    display: block;
+    font-weight: bold;
+    font-size: 21px;
+}
+input{
+    margin-left: -1.5px;
+    border-radius: 10px;
+}
+input.publicacao-input-descricacao{
+    padding-bottom: 100px;
+    height: 100px;
+    margin-left: -1.5px;
+}
+
+button.btn-criacao-publi{
+    margin-left:125px;
+    text-align: center;
+    width: 200px;
+    height: 40px;
+    background-color:#0075D2 ;
+    border: none;
+    border-radius: 25px;
+    color: white;
+}
+.btn-criacao-publi:hover{
+    background-color: #045191;
+}
+
+
+@media (max-width: 600px) {
+    button.btn-criacao-publi{
+        display: flex;
+        justify-content: center; 
+        align-items: center;     
+        margin: 0 auto; 
+       
+    }
+    div.container-publicacao{
+        width: 100%;
+        height: 100vh;
+        padding: 5px;
+        padding-top: 30%;
+        display: flex;
+        margin: auto;
+        margin-bottom: 0px;
+    }
+    
+
+}
