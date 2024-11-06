@@ -25,7 +25,7 @@ const NavBar = () => {
         if (sobreElement) {
           sobreElement.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 100); // Delay to ensure the page has navigated
+      }, 100);
     } else {
       const sobreElement = document.getElementById('sobre');
       if (sobreElement) {
@@ -42,11 +42,7 @@ const NavBar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      if (offset > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(offset > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -69,7 +65,6 @@ const NavBar = () => {
         </button>
         <div className={`collapse navbar-collapse ${menuVisible ? 'show' : ''}`}>
           <div className="mx-auto d-flex align-items-center justify-content-center">
-
             <ul className={`navbar-nav ${styles.menu}`}>
               <li className={`nav-item ${styles.navItem}`}>
                 <NavLink className="nav-link" to="/" activeClassName={styles.active}>
@@ -80,6 +75,11 @@ const NavBar = () => {
                 <span className="nav-link" onClick={handleScrollToSobre} style={{ cursor: 'pointer' }}>
                   <i className={`fas fa-info-circle ${styles.iconLarge}`}></i> Sobre
                 </span>
+              </li>
+              <li className={`nav-item ${styles.navItem}`}>
+                <NavLink className="nav-link" to="/blog" activeClassName={styles.active}>
+                  <i className={`fas fa-pencil-alt ${styles.iconLarge}`}></i> Blog
+                </NavLink>
               </li>
               {!currentUser && (
                 <li className={`nav-item ${styles.navItem}`}>
@@ -102,7 +102,6 @@ const NavBar = () => {
                   </li>
                 </>
               )}
-
             </ul>
           </div>
           <form className="d-flex ms-auto">
