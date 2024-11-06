@@ -14,6 +14,7 @@ import CriarPubli from "./pages/CriarPubli/CriarPubli";
 import ProtectedRoute from '../src/Firebase/ProtectedRoute';
 import EditarPubli from "./pages/EditarPubli/EditarPubli";
 import DashBoard from "./pages/DashBoard/DashBoard";
+import Blog from "./pages/Blog/Blog";
 
 import { AuthProvider } from '../src/Firebase/AuthContext';
 
@@ -43,6 +44,7 @@ function App() {
           <Route path="/criar" element={<CriarPubli />} />
           <Route path="/editar" element={<EditarPubli />} />
           <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/blog" element={<Blog />} />
         </Routes>
       </div>
       </BrowserRouter>
