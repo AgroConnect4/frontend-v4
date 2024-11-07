@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import Slider from "react-slick";
 import style from "./Home.module.css";
 import Gerais from "../../components/Publicacoes/Gerais";
 import Maquinas from "../../components/Publicacoes/Maquinas";
@@ -12,6 +13,9 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import Footer from "../../components/Footer/Footer";
 
+// Importa as dependências do slick-carousel
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 const Home = ({ publicacoesRef }) => {
   const sobreRef = useRef(null);
@@ -35,25 +39,48 @@ const Home = ({ publicacoesRef }) => {
     localStorage.setItem('feedbacks', JSON.stringify(updatedFeedbacks));
   };
 
+  // Configurações do slider
+  const sliderSettings = {
+    dots: true, // Ativa os pontos de navegação
+    infinite: true, // Loop infinito
+    speed: 500, // Velocidade da transição
+    slidesToShow: 1, // Exibe um slide por vez
+    slidesToScroll: 1, // Move um slide por vez
+    autoplay: true, // Ativa o autoplay
+    autoplaySpeed: 3000, // Intervalo de 3 segundos entre os slides
+  };
+
   return (
     <>
       <div className={style["home-container"]}>
+        {/* Slider */}
         <div className={style["banner-container"]}>
-          <img src="/img/bannerNote.png" alt="Banner" className={style["banner-image"]} />
-          <div className={style["banner-text"]}>
-            <h1>Seja bem-vindos ao Agroconnect</h1>
-            <h2>Conectando o mundo do agronegócio!</h2>
-          </div>
-          <div className={style["button-container"]}>
-            <button className={style["learn-more-button"]} onClick={handleScrollToSobre}>
-              <span className={style["icon-container"]}>
-                <span className={style["icon"]}>&#9660;</span>
-              </span>
-              <span className={style["learn-more-text"]}>Saiba Mais</span>
-            </button>
-          </div>
+          <Slider {...sliderSettings}>
+            <div>
+              <img src="/img/Sua Rede Social Agro Favorita! (1).png" alt="Banner 1" className={style["banner-image"]} />
+              <div className={style["banner-text"]}>
+              
+              </div>
+            </div>
+            <div>
+              <img src="/img/Design sem nome (11).png" alt="Banner 2" className={style["banner-image"]} />
+              <div className={style["banner-text"]}>
+                
+              </div>
+            </div>
+            
+            <div>
+              <img src="/img/Design sem nome (12).png" alt="Banner 1" className={style["banner-image"]} />
+              <div className={style["banner-text"]}>
+              
+              </div>
+            </div>
+            {/* Adicione mais slides conforme necessário */}
+          </Slider>
+          
         </div>
-       
+        
+        {/* Cards de categoria */}
         <div className={style.cards}>
           <center><h5 className={style["divulgacao-titulo"]}>Divulgações</h5></center>
           <div className={style["card-container"]}>
@@ -75,39 +102,46 @@ const Home = ({ publicacoesRef }) => {
             </div>
           </div>
         </div>
+
+        {/* Exibe a categoria de publicações */}
         <div ref={publicacoesRef}>
-         <center><h1>Publicações {categoria}</h1></center> 
+          <center><h1>Publicações {categoria}</h1></center>
         </div>
         {categoria === 'gerais' && <Gerais />}
         {categoria === 'maquinas' && <Maquinas />}
         {categoria === 'produtos' && <Produtos />}
         {categoria === 'servicos' && <Servicos />}
 
+        {/* Sobre */}
         <div ref={sobreRef}>
           <Sobre />
         </div>
       </div>
+
+      {/* Avaliação e Feedback */}
       <div>
-       
         <div className="container">
           <h1 className="my-4">Avaliação e Feedbacks</h1>
           <Avaform addFeedback={addFeedback} />
           <Avalist feedbacks={feedbacks} />
         </div>
       </div>
-   
+
+      {/* Localização */}
       <center><h1>Localização</h1></center>
       <MapContainer center={center} zoom={13} style={{ height: '400px' }}>
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <Marker position={center}>
           <Popup>
             Estou aqui!
           </Popup>
         </Marker>
       </MapContainer>
+
+      {/* Botão para voltar ao topo */}
       <BotaoTopo />
+      
+      {/* Rodapé */}
       <Footer />
     </>
   );
