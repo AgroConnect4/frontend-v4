@@ -47,6 +47,7 @@ const Blog = () => {
         </div>
       </header>
 
+
       <br />
        {/* Seção de Dicas para Altas Temperaturas */}
        <section className={styles.highTempTips}>
