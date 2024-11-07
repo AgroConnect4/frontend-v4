@@ -1,5 +1,41 @@
+/* Menu lateral */
+/* Menu lateral */
+.nav-categories {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background-color: white;
+  padding: 20px 10px;
+  box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px 0 0 8px;
+}
 
-/*banner*/
+.category-icon {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.category-icon span {
+  margin-left: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.category-icon:hover {
+  color: #28a745;
+}
+
+.category-icon:hover span {
+  font-weight: bold;
+
+}
+
+
+
+/* Banner */
 .banner-container {
   position: relative;
   width: 100%;
@@ -8,538 +44,293 @@
 }
 
 .banner-image {
-  width: 100%;            /* A imagem vai ocupar 100% da largura do container */
-  height: 100%;           /* A imagem vai ocupar 100% da altura do container */
-  object-fit: contain;    /* A imagem se ajusta sem cortar, mantendo a proporção */
-  object-position: center; /* Centraliza a imagem dentro do contêiner */
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajuste para cobrir o contêiner de forma proporcional */
+  object-position: center;
 }
-  
-  
-  .banner-text {
-    position: absolute;
-    top:30%;
-   margin-left: 100px; /* Posição mais para a esquerda */
-    transform: translateY(-50%);
-    color: rgb(0, 0, 0);
+
+.banner-text {
+  position: absolute;
+  top: 30%;
+  margin-left: 30px;
+  transform: translateY(-50%);
+  color: rgb(0, 0, 0);
+}
+
+.banner-text h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.banner-text h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(183, 183, 183, 0.8);
+}
+
+.banner-text p {
+  font-size: 1.5rem;
+}
+
+/* Pesquisa */
+.search-toggle {
+  display: none;
+}
+
+.search-bar {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-image: url('/img/search.png');
+  background-size: cover;
+  cursor: pointer;
+}
+
+/* Publicações */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #cacdcba6;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: rgb(0, 0, 0);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f120;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Categorias */
+.cards {
+  background-image: linear-gradient(to bottom, #472E0B 45%, white 50%);
+  background-repeat: no-repeat;
+  background-size: 100% 200%;
+  padding-top: 1%;
+  padding-bottom: 2%;
+}
+
+.divulgacao-titulo {
+  margin-top: 15%;
+  color: rgb(255, 255, 255);
+  font-size: 50px;
+  font-weight: 400;
+  padding-bottom: 30px;
+}
+
+.home-container {
+  position: relative;
+  background-image: url('/img/cardf2.png');
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+  margin-bottom: 15%;
+}
+
+.card {
+  width: 200px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 140%;
+  height: 80%;
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.849);
+}
+
+/* Botões e ícones */
+.learn-more-button {
+  display: flex;
+  align-items: center;
+  padding: 7px 7px;
+  background-color: #1111115d;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 45px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+  box-shadow: 10px 10px 20px 0px rgba(163, 238, 128, 0.658);
+  font-weight: bold;
+}
+
+.icon-container {
+  margin-right: 8px;
+}
+
+.icon {
+  font-size: 20px;
+}
+
+.learn-more-text {
+  color: #ffffff;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #76ce04;
+  margin-right: 10px;
+}
+
+.icon {
+  font-size: 16px;
+  color: black;
+}
+
+.learn-more-button:hover {
+  background-color: #45a049;
+}
+
+/* Responsivo */
+@media screen and (max-width: 1300px) {
+  .card-container {
+    flex-direction: column;
+    align-items: center;
   }
-  
+  .category-icon span {
+    display: none; /* Esconde o texto ao lado do ícone */
+  }
+  .nav-categories h1 {
+    display: none; /* Esconde o título em telas pequenas */
+  }
+  .banner-image {
+    width: 100%;            /* A imagem vai ocupar 100% da largura do container */
+    height: auto;           /* A altura vai ser ajustada automaticamente para manter a proporção */
+    object-fit: contain;    /* A imagem vai se ajustar sem cortar ou distorcer */
+    object-position: center; /* Centraliza a imagem dentro do contêiner */
+  }
+
+  .card {
+    margin-bottom: 20px;
+  }
+
+  .top-bar h4 {
+    color: rgb(0, 0, 0);
+    margin-top: -25px;
+    margin-left: 160px;
+    font-size: 30px;
+  }
+
+  .home-container {
+    background-image: url('/img/cardf4 (2).png');
+  }
+
+  .agroconnect {
+    color: rgb(0, 0, 0);
+    padding-left: 7%;
+    font-weight: 700;
+    position: fixed;
+  }
+
+  .hamburger-button {
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .hamburger-icon {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: black;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+  }
+  .nav-categories h1 {
+    display: none; /* Esconde o título */
+  }
+
+  .menu {
+    display: none;
+  }
+
+  .menu-visible {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 758px) {
+  .banner-text {
+    top: 20%;
+    margin-left: 30px;
+  }
+  .category-icon span {
+    display: none; /* Esconde o texto ao lado do ícone */
+  }
   .banner-text h1 {
     font-size: 3.5rem;
-    margin-bottom: 10px;
-    
+  }
+
+  .nav-categories h1 {
+    display: none; /* Esconde o título em telas pequenas */
   }
   .banner-text h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(183, 183, 183, 0.8);
+    font-size: 1.8rem;
   }
-  
+  .nav-categories h1 {
+    display: none; /* Esconde o título */
+  }
+
   .banner-text p {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
-  /*pesquisa*/
-  .search-toggle {
-    display: none;
-  }
-  
-  .search-bar {
-    position: relative;
-  }
-  
-  .search-icon {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    background-image: url('/img/search.png'); /* Ícone de pesquisa fechado */
-    background-size: cover;
-    cursor: pointer;
-  }
-  
-  /* Quando o checkbox estiver marcado, mude o ícone para o ícone de fechar */
-  .search-toggle:checked + .search-bar .search-icon {
-    background-image: url('/img/search.png'); /* Ícone de pesquisa aberto */
-  }
-  
-  .search-bar .search-input {
-    width: 0;
-    padding-left: 30px; /* Espaço para o ícone de pesquisa */
-    transition: width 0.4s ease-in-out;
-    background-color: #f2f2f200; /* Cor de fundo dentro da barra de pesquisa */
-    border: none; /* Remover borda */
-  }
-  
-  .search-toggle:checked + .search-bar .search-input {
-    width: 150px; /* Largura do campo de pesquisa quando ativado */
-    border: 1px solid #cccccc04; /* Adicionar borda quando ativado, se desejado */
-  }
-  
-  /*Publicações*/
-  .dropdown {
-  
-    position: relative;
-    display: inline-block;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #cacdcba6;
-    min-width: 160px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: rgb(0, 0, 0);
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .dropdown-content a:hover {
-    background-color: #f1f1f120;
-  }
-  
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  /*4 Categorias*/
-  .cards{
-    background-image: linear-gradient(to bottom, #472E0B 45%, white 50%);
-    background-repeat: no-repeat;
-    background-size: 100% 200%;
-    padding-top: 1%;
-    padding-bottom: 2%;
-  }
-  .divulgacao-titulo{
-    margin-top: 15%;
-    color: rgb(255, 255, 255);
-    font-size: 50px;
-   font-weight: 400;
-  padding-bottom:30px ;
-   
-  }
-  .home-container {
-    position: relative;
-    background-image:url('/img/cardf2.png ') ;
-    
-  }
-  
+
+
   .card-container {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
-    margin-bottom: 15%;
-  
-  
-  
-  }
-  
-  .card {
-    width: 200px;
-  
-    transition: transform 0.3s ease;
-   }
-  
-  .card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .card img {
-    width: 140%;
-    height: 80%;
-    border-radius: 10px;
-    box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.849);
-  }
-  
-  
-  .categorias-titulo{
-    margin-top: 10px;
-    color: #ffffff;
-    text-align: center;
-    justify-content: center;
-    margin-left: 35%;
-  }
-  /* Estilo para o botão "Saiba Mais" */
-  .learn-more-button {
-    display: flex;
-    align-items: center; /* Alinha os itens centralmente */
-    padding: 7px 7px;
-    background-color: #1111115d; /* Cor de fundo do botão */
-    color: rgb(255, 255, 255); /* Cor do texto do botão */
-    border: none;
-    border-radius: 45px; /* Cantos arredondados */
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Animação na mudança de cor de fundo */
-    margin-top: 20px; /* Espaçamento entre o texto do banner e o botão */
-    box-shadow: 10px 10px 20px 0px rgba(163, 238, 128, 0.658);
-    font-weight: bold;
-  }
- 
-  .icon-container {
-    margin-right: 8px; /* Espaçamento entre o ícone e o texto */
-  }
-  
-  .icon {
-    font-size: 20px; /* Ajusta o tamanho do ícone */
-  }
-  
-  .learn-more-text {
-    color: #ffffff; /* Cor do texto */
-  }
-  
-  /* Estilo para o ícone dentro de um círculo */
-  .icon-container {
-    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 40px; /* Largura do círculo */
-    height: 40px; /* Altura do círculo */
-    border-radius: 50%; /* Forma circular */
-    background-color: #76ce04; /* Cor de fundo do círculo */
-    margin-right: 10px; /* Espaçamento entre o círculo e o texto */
   }
-  
-  /* Estilo para o ícone de flecha */
-  .icon {
-    font-size: 16px; /* Tamanho da flecha */
-    color: black; /* Cor da flecha */
+
+  .card {
+    margin-bottom: 20px;
   }
-  
-  /* Efeito de hover para o botão */
-  .learn-more-button:hover {
-    background-color: #45a049; /* Cor de fundo quando o botão é sobreposto */
+
+  .top-bar h4 {
+    color: rgb(0, 0, 0);
+    margin-top: -25px;
+    margin-left: 100px;
+    font-size: 20px;
   }
-  .button-container {
-    display: flex;
-    justify-content: center; /* Centraliza o botão horizontalmente */
-    margin-top: -130px; /* Espaçamento entre o botão e o texto do banner */
+
+  .home-container {
+    background-image: url('/img/cardf4 (2).png');
   }
-  
-  
-  
-  /*responsivo*/
-  /* Media queries para tornar o estilo responsivo */
-  @media screen and (max-width: 1300px) {
-    .menu li {
-      margin-right: 10px; /* Reduz a margem entre os itens do menu em telas menores */
-    }
-  
-    .logo {
-      width: 120px; /* Reduz o tamanho da logo em telas menores */
-    }
-  
-    .banner-text {
-      position: absolute;
-      top: 30%;
-     margin-left: 30px; /* Posição mais para a esquerda */
-      transform: translateY(-50%);
-      color: rgb(0, 0, 0);
-    }
-  
-    .banner-text h1 {
-      font-size: 2rem; /* Reduz o tamanho do título sobre o banner em telas menores */
-    }
-  
-    .banner-text h2 {
-      font-size: 1.5rem; /* Reduz o tamanho do subtítulo sobre o banner em telas menores */
-    }
-  
-    .banner-text p {
-      font-size: 3.5rem; /* Reduz o tamanho do texto sobre o banner em telas menores */
-    }
-    .banner-image {
-      width: 100%;
-      height: 100vh;
-      object-fit: cover;
-    }
-    .card-container {
-      flex-direction: column; /* Altera a direção do flex para coluna */
-      align-items: center; /* Centraliza os cards na tela */
-    }
-    .card {
-      margin-bottom: 20px; /* Adiciona margem inferior para criar espaço entre os cards */
-    }
-    .top-bar h4{
-      color: rgb(0, 0, 0);
-      margin-top: -25px;
-      margin-left: 160px;
-      font-size: 30px;
-      font-family: "Salsa", cursive;
-      font-weight: 400;
-      font-style: normal
-     }
-     .home-container {
-      position: relative;
-      background-image:url('/img/cardf4 (2).png ') ;
-      
-    }
-    .agroconnect {
-      color: rgb(0, 0, 0);
-    padding-left: 7%;
-      font-weight: 700;
-      position: fixed;
-     
-    }
-    .top-bar .logo {
-      width: 250px;
-      margin-top: -40px;
-     
-    }
-    /* Ícone de hambúrguer */
-  .hamburger-button {
-    background: none;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .hamburger-icon {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: black;
-    margin: 5px 0;
-    transition: all 0.3s ease;
-  }
-  
-  /* Ajuste a visibilidade do menu */
-  .menu {
-    display: none;
-  }
-  
-  /* Mostra o menu quando a classe menu-visible é aplicada */
-  .menu-visible {
-    display: block;
-  }
-    
-  }
-  @media screen and (max-width: 758px) {
-    .menu li {
-      margin-right: 10px; /* Reduz a margem entre os itens do menu em telas menores */
-    }
-  
-    .logo {
-      width: 120px; /* Reduz o tamanho da logo em telas menores */
-    }
-  
-    .banner-text {
-      position: absolute;
-      top: 20%;
-     margin-left: 30px; /* Posição mais para a esquerda */
-      transform: translateY(-50%);
-      color: rgb(0, 0, 0);
-    }
-  
-    .banner-text h1 {
-      font-size: 2.5rem; /* Reduz o tamanho do título sobre o banner em telas menores */
-    }
-  
-    .banner-text h2 {
-      font-size: 1.8rem; /* Reduz o tamanho do subtítulo sobre o banner em telas menores */
-    }
-  
-    .banner-text p {
-      font-size: 1.5rem; /* Reduz o tamanho do texto sobre o banner em telas menores */
-    }
-    .banner-image {
-      width: 100%;
-      height: 100vh;
-    }
-    .card-container {
-      flex-direction: column; /* Altera a direção do flex para coluna */
-      align-items: center; /* Centraliza os cards na tela */
-    }
-    .card {
-      margin-bottom: 20px; /* Adiciona margem inferior para criar espaço entre os cards */
-    }
-    .top-bar h4{
-      color: rgb(0, 0, 0);
-      margin-top: -25px;
-      margin-left: 100px;
-      font-size: 20px;
-      font-family: "Salsa", cursive;
-      font-weight: 400;
-      font-style: normal
-     }
-     .home-container {
-      position: relative;
-      background-image:url('/img/cardf4 (2).png ') ;
-      
-    }
-    .agroconnect {
-      color: rgb(0, 0, 0);
-    padding-left: 7%;
-      font-weight: 700;
-      position: fixed;
-     
-    }
-    .top-bar .logo {
-      width: 190px;
-      margin-top: -40px;
-     
-    }
-    
-  /* Ícone de hambúrguer */
-  .hamburger-button {
-    background: none;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .hamburger-icon {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: black;
-    margin: 5px 0;
-    transition: all 0.3s ease;
-  }
-  
-  /* Ajuste a visibilidade do menu */
-  .menu {
-    display: none;
-  }
-  
-  /* Mostra o menu quando a classe menu-visible é aplicada */
-  .menu-visible {
-    display: block;
-  }
-    
-  }
-  @media screen and (max-width: 798px) {
-    
-  
-  /* Ícone de hambúrguer */
-  .hamburger-button {
-    background: none;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .hamburger-icon {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: black;
-    margin: 5px 0;
-    transition: all 0.3s ease;
-  }
-  
-  /* Ajuste a visibilidade do menu */
-  .menu {
-    display: none;
-  }
-  
-  /* Mostra o menu quando a classe menu-visible é aplicada */
-  .menu-visible {
-    display: block;
-  }
-  
-  }
-  @media screen and (max-width: 414px) {
-    .menu li {
-      margin-right: 10px; /* Reduz a margem entre os itens do menu em telas menores */
-    }
-  
-    .logo {
-      width: 120px; /* Reduz o tamanho da logo em telas menores */
-    }
-  
-    .banner-text {
-      position: absolute;
-      top: 50%;
-     margin-left: 30px; /* Posição mais para a esquerda */
-      transform: translateY(-50%);
-      color: rgb(0, 0, 0);
-    }
-  
-    .banner-text h1 {
-      font-size: 1rem; /* Reduz o tamanho do título sobre o banner em telas menores */
-    }
-  
-    .banner-text h2 {
-      font-size: 0.8rem; /* Reduz o tamanho do subtítulo sobre o banner em telas menores */
-    }
-  
-    .banner-text p {
-      font-size: 1.5rem; /* Reduz o tamanho do texto sobre o banner em telas menores */
-    }
-    .banner-image {
-      width: 100vh;
-      height: 100vh;
-    }
-    .card-container {
-      flex-direction: column; /* Altera a direção do flex para coluna */
-      align-items: center; /* Centraliza os cards na tela */
-    }
-    .card {
-      margin-bottom: 20px; /* Adiciona margem inferior para criar espaço entre os cards */
-    }
-    .top-bar h4{
-      color: rgb(0, 0, 0);
-      margin-top: -25px;
-      margin-left: 100px;
-      font-size: 20px;
-      font-family: "Salsa", cursive;
-      font-weight: 400;
-      font-style: normal
-     }
-     .home-container {
-      position: relative;
-      background-image:url('/img/cardf4 (2).png ') ;
-      
-    }
-    .agroconnect {
-      color: rgb(0, 0, 0);
-    padding-left: 7%;
-      font-weight: 700;
-      position: fixed;
-     
-    }
-    .top-bar .logo {
-      width: 190px;
-      margin-top: -40px;
-     
-    }
-    
-  /* Ícone de hambúrguer */
-  .hamburger-button {
-    background: none;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .hamburger-icon {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: black;
-    margin: 5px 0;
-    transition: all 0.3s ease;
-  }
-  
-  /* Ajuste a visibilidade do menu */
-  .menu {
-    display: none;
-  }
-  
-  /* Mostra o menu quando a classe menu-visible é aplicada */
-  .menu-visible {
-    display: block;
-  }
-    
-  }
-  
-  
-  
-  
-  
-  
+}
