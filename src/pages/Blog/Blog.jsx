@@ -13,6 +13,7 @@ const Blog = () => {
         </div>
       </header>
 
+
       <br />
       <center><h2>Dicas Agro</h2></center>
       <div className={styles.content}>
