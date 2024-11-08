@@ -1,4 +1,3 @@
-// src/pages/Eventos/Eventos.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Eventos.module.css';
@@ -45,6 +44,11 @@ const Eventos = () => {
     // Aqui, você poderia integrar uma funcionalidade para adicionar o evento ao calendário
   };
 
+  const handleCompartilharClick = (evento) => {
+    alert(`Evento compartilhado: ${evento.nome}`);
+    // Aqui, você poderia integrar uma funcionalidade para compartilhar o evento
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -63,9 +67,14 @@ const Eventos = () => {
             </p>
             <p className={styles.local}>{evento.local}</p>
             <p className={styles.descricao}>{evento.descricao}</p>
-            <button onClick={() => handleLembrarMeClick(evento)} className={styles.lembraMeButton}>
-              Lembrar-me
-            </button>
+            <div className={styles.botoes}>
+              <button onClick={() => handleLembrarMeClick(evento)} className={styles.lembraMeButton}>
+                Lembrar-me
+              </button>
+              <button onClick={() => handleCompartilharClick(evento)} className={styles.compartilharButton}>
+                <i className="fas fa-share-alt"></i> Compartilhar
+              </button>
+            </div>
           </div>
         ))}
       </div>
