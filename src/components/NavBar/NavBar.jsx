@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import styles from './NavBar.module.css'; // Arquivo CSS de módulos
-import { useAuth } from '../../Firebase/AuthContext'; // Importe o contexto de autenticação
+import styles from './NavBar.module.css';
+import { useAuth } from '../../Firebase/AuthContext';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../Firebase/Firebaseconfig';
 
@@ -11,7 +11,7 @@ const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
   const navigate = useNavigate();
-  const { currentUser } = useAuth(); // Use o contexto de autenticação
+  const { currentUser } = useAuth();
 
   const toggleMenuVisibility = () => {
     setMenuVisible(!menuVisible);
@@ -75,6 +75,11 @@ const NavBar = () => {
                 <span className="nav-link" onClick={handleScrollToSobre} style={{ cursor: 'pointer' }}>
                   <i className={`fas fa-info-circle ${styles.iconLarge}`}></i> Sobre
                 </span>
+              </li>
+              <li className={`nav-item ${styles.navItem}`}>
+                <NavLink className="nav-link" to="/eventos" activeClassName={styles.active}>
+                  <i className={`fas fa-calendar-alt ${styles.iconLarge}`}></i> Eventos
+                </NavLink>
               </li>
               <li className={`nav-item ${styles.navItem}`}>
                 <NavLink className="nav-link" to="/blog" activeClassName={styles.active}>

@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -15,7 +16,8 @@ import ProtectedRoute from '../src/Firebase/ProtectedRoute';
 import EditarPubli from "./pages/EditarPubli/EditarPubli";
 import DashBoard from "./pages/DashBoard/DashBoard";
 import Blog from "./pages/Blog/Blog";
-import EditarPerfil from "./pages/EditarPerfil/EditarPerfil"; 
+import EditarPerfil from "./pages/EditarPerfil/EditarPerfil";
+import Eventos from "./pages/Eventos/Eventos"; // Importe o componente Eventos
 
 import { AuthProvider } from '../src/Firebase/AuthContext';
 
@@ -47,6 +49,7 @@ function App() {
             <Route path="/dashboard" element={<DashBoard />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/editarperfil" element={<EditarPerfil />} />
+            <Route path="/eventos" element={<Eventos />} /> {/* Nova rota para Eventos */}
           </Routes>
         </div>
       </BrowserRouter>
