@@ -23,7 +23,7 @@ const developers = [
 
 const SobrePage = () => {  // Renomeei o componente para evitar o conflito de nomes
   const sobreRef = useRef(null); // Use o useRef para controlar o foco ou a rolagem se necessário.
-
+ 
   return (
     <div className={style.sobreContainer}>
       {/* Seção de introdução sobre a empresa */}
