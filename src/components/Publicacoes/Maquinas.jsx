@@ -1,203 +1,190 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./Publicacao.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Maquinas = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const initialPostState = {
+    isExpanded: false,
+    isLiked: false,
+    isCommenting: false,
+    comments: [],
+    newComment: "", // Estado para armazenar o comentário temporário
+  };
+
+  const [posts, setPosts] = useState([
+    {
+      id: 1,
+      header: { name: "AgroTech Solutions", category: "Empresa", date: "09/11/2024, 14:30", avatar: "/img/logo-agrotech.png" },
+      title: "Produto: Trator Massey Ferguson 8737",
+      shortDescription: "Trator Massey Ferguson 8737, ano 2020...",
+      fullDescription: "Trator Massey Ferguson 8737, ano 2020 em excelente estado. Ideal para diversas operações agrícolas. Motor de 370 hp, transmissão Dyna-6, eixo dianteiro com suspensão e cabine com conforto premium.",
+      image: "/img/trator-masseyferguson.jpg",
+      contact: {
+        email: "contato@agrotech.com",
+        phone: "(13) 9987-5861",
+      },
+      state: { ...initialPostState },
+    },
+    {
+      id: 2,
+      header: { name: "Máquinas Sol", category: "Empresa", date: "04/11/2024, 14:30", avatar: "/img/maquinas-sol.png" },
+      title: "Colheitadeira John Deere 9870 STS",
+      shortDescription: " Colheitadeira John Deere 9870 STS, modelo 2015 em ótimo estado de conservação...",
+      fullDescription: " Colheitadeira John Deere 9870 STS, modelo 2015 em ótimo estado de conservação. Ideal para grandes áreas de plantio de grãos. Motor de 450 hp, capacidade do tanque de grãos de 10.000 litros e plataforma de corte de 35 pés.",
+      image: "/img/colheitadeira-johndeere.jpg",
+      contact: {
+        email: "contato@maquinasol.com",
+        phone: "(11) 9887-5462",
+      },
+      state: { ...initialPostState },
+    },
+  
+  ]);
+
+  const [shareMessage, setShareMessage] = useState("");
+
+  const toggleLike = (postId) => {
+    setPosts(posts.map(post =>
+      post.id === postId ? { ...post, state: { ...post.state, isLiked: !post.state.isLiked } } : post
+    ));
+  };
+
+  const toggleDescription = (postId) => {
+    setPosts(posts.map(post =>
+      post.id === postId ? { ...post, state: { ...post.state, isExpanded: !post.state.isExpanded } } : post
+    ));
+  };
+
+  const toggleCommenting = (postId) => {
+    setPosts(posts.map(post =>
+      post.id === postId ? { ...post, state: { ...post.state, isCommenting: !post.state.isCommenting } } : post
+    ));
+  };
+
+  const handleCommentChange = (postId, comment) => {
+    setPosts(posts.map(post =>
+      post.id === postId ? { ...post, state: { ...post.state, newComment: comment } } : post
+    ));
+  };
+
+  const handleCommentSubmit = (postId) => {
+    setPosts(posts.map(post =>
+      post.id === postId && post.state.newComment.trim() !== ""
+        ? {
+            ...post,
+            state: {
+              ...post.state,
+              comments: [...post.state.comments, { user: "User Admin", comment: post.state.newComment }],
+              newComment: "",
+              isCommenting: false,
+            }
+          }
+        : post
+    ));
+  };
+
+  const handleShare = (postId) => {
+    setShareMessage("Link copiado para a área de transferência!");
+    setTimeout(() => {
+      setShareMessage("");
+    }, 3000);
+  };
+
   return (
     <>
-      <section>
-        <div className={style.estrutura}>
-          <div className={style.row}>
-            <div className={style.col}>
-              <img
-                className={style["logo-parceiros"]}
-                src="/img/maquinas-sol.png"
-                alt="Logo Parceiros"
-              />
-              <div className={style["post-textos"]}>
-                <p className={style["nome-parceiro"]}>Maquinas Sol</p>
-                <p className={style["tipo-parceiro"]}>
-                  Fazenda|Maquina|
-                  <img
-                    className={style.pontinhos}
-                    src="/img/pontos.png"
-                    alt="pontinhos"
-                  />
-                </p>
+     <div>
+      {posts.map(post => (
+        <section key={post.id}>
+          <div className={style.estrutura}>
+            <div className={style.post}>
+              <div className={style["post-header"]}>
+                <img src={post.header.avatar} alt="Logo Parceiros" className={style["user-avatar"]} />
+                <div className={style["post-info"]}>
+                  <h4 className={style["user-name"]}>{post.header.name}</h4>
+                  <p className={style["post-category"]}>{post.header.category}</p>
+                </div>
+                <p className={style["post-date"]}>Publicado em: {post.header.date}</p>
               </div>
-            </div>
-            <hr></hr>
 
-            <center>
-              <h5>Colheitadeira John Deere 9870 STS</h5>
-            </center>
+              <div className={style["post-content"]}>
+                <h3 className={style["post-title"]}>{post.title}</h3>
+                <p className={style["post-description"]}>
+                  {post.state.isExpanded ? post.fullDescription : post.shortDescription}
+                  <button onClick={() => toggleDescription(post.id)} className={style["toggle-button"]}>
+                    {post.state.isExpanded ? "Ler Menos" : "Ler Mais"}
+                  </button>
+                </p>
+                {post.image && <img src={post.image} alt={post.title} className={style["post-image"]} />}
+                {post.contact && (
+  <div className={style["contact-info"]}>
+    <p><strong>Contato:</strong></p>
+    <div className={style["contact-details"]}>
+      <p>Email: <a href={`mailto:${post.contact.email}`}>{post.contact.email}</a></p>
+      <p>Telefone: <a href={`tel:+${post.contact.phone}`}>{post.contact.phone}</a></p>
+    </div>
+  </div>
+)}
 
-            <p className={style["texto-parceiros"]}>
-              Colheitadeira John Deere 9870 STS, modelo 2015 em ótimo estado de conservação. Ideal para grandes áreas de plantio de grãos. Motor de 450 hp, capacidade do tanque de grãos de 10.000 litros e plataforma de corte de 35 pés.
-            </p>
-            <p className={style["ler-mais"]}>Ler mais</p>
+              </div>
 
-            <div>
-              <img
-                className={style["imagem-parceiros"]}
-                src="/img/colheitadeira-johndeere.jpg"
-                alt="Colheitadeira John Deere 9870 STS"
-              />
-            </div>
+              <div className={style["post-actions"]}>
+                <button className={style["action-button"]} onClick={() => toggleLike(post.id)}>
+                  {post.state.isLiked ? "👍 Curtido" : "👍 Curtir"}
+                </button>
 
-            <div className={style["botoes-container"]}>
-              <img
-                className={style["curtirFavoritar"]}
-                src="/img/coracao.png"
-                alt="Curtir"
-              />
+                <button className={style["action-button"]} onClick={() => toggleCommenting(post.id)}>
+                  💬 Comentar
+                </button>
 
-              <button className={style["btn-saibamais"]} type="button">
-                Entrar na publicação
-              </button>
-              <img
-                className={style["curtirFavoritar"]}
-                src="/img/favorito.png"
-                alt="Favoritar"
-              />
+                <button className={style["action-button"]} onClick={() => handleShare(post.id)}>
+                  🔗 Compartilhar
+                </button>
+              </div>
+
+              {post.state.isCommenting && (
+                <div className={style["comment-box"]}>
+                  <textarea
+                    className="form-control"
+                    rows="3"
+                    placeholder="Digite seu comentário..."
+                    value={post.state.newComment}
+                    onChange={(e) => handleCommentChange(post.id, e.target.value)}
+                  />
+                  <button className="btn btn-primary mt-2" onClick={() => handleCommentSubmit(post.id)}>
+                    Adicionar Comentário
+                  </button>
+                  <button className="btn btn-secondary mt-2 ms-2" onClick={() => toggleCommenting(post.id)}>
+                    Cancelar
+                  </button>
+                </div>
+              )}
+
+              {post.state.comments.length > 0 && (
+                <div className={style["comments-section"]}>
+                  {post.state.comments.map((comment, index) => (
+                    <div key={index} className={style["comment"]}>
+                      <div className={style["comment-header"]}>
+                        <img src="https://via.placeholder.com/50" alt="User Avatar" className={style["user-avatar"]} />
+                        <span className={style["user-name"]}>{comment.user}</span>
+                      </div>
+                      <p>{comment.comment}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
-        </div>
-      </section>
-
-      <section>
-        <div className={style.estrutura}>
-          <div className={style.row}>
-            <div className={style.col}>
-              <img
-                className={style["logo-parceiros"]}
-                src="/img/logo-agrotech.png"
-                alt="Logo Parceiros"
-              />
-              <div className={style["post-textos"]}>
-                <p className={style["nome-parceiro"]}>AgroTech Solutions</p>
-                <p className={style["tipo-parceiro"]}>
-                  Empresa|Maquina|
-                  <img
-                    className={style.pontinhos}
-                    src="/img/pontos.png"
-                    alt="pontinhos"
-                  />
-                </p>
-              </div>
-            </div>
-            <hr></hr>
-
-            <center>
-              <h5>Trator Massey Ferguson 8737</h5>
-            </center>
-
-            <p className={style["texto-parceiros"]}>
-              Trator Massey Ferguson 8737, ano 2020 em excelente estado. Ideal para diversas operações agrícolas. Motor de 370 hp, transmissão Dyna-6, eixo dianteiro com suspensão e cabine com conforto premium.
-            </p>
-            <p className={style["ler-mais"]}>Ler mais</p>
-
-            <div>
-              <img
-                className={style["imagem-parceiros"]}
-                src="/img/trator-masseyferguson.jpg"
-                alt="Trator Massey Ferguson 8737"
-              />
-            </div>
-
-            <div className={style["botoes-container"]}>
-              <img
-                className={style["curtirFavoritar"]}
-                src="/img/coracao.png"
-                alt="Curtir"
-              />
-
-              <button className={style["btn-saibamais"]} type="button">
-                Entrar na publicação
-              </button>
-              <img
-                className={style["curtirFavoritar"]}
-                src="/img/favorito.png"
-                alt="Favoritar"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-      <section>
-        <div className={style.estrutura}>
-          <div className={style.row}>
-            <div className={style.col}>
-              <img
-                className={style["logo-parceiros"]}
-                src="/img/LogoBaldan.png"
-                alt="Logo Parceiros"
-              />
-
-              <div className={style["post-textos"]}>
-                <p className={style["nome-parceiro"]}>Baldan</p>
-                <p className={style["tipo-parceiro"]}>
-                  Empresa|Maquinas|
-                  <img
-                    className={style.pontinhos}
-                    src="/img/pontos.png"
-                    alt="pontinhos"
-                  />
-                </p>
-              </div>
-            </div>
-            <hr></hr>
-
-            <center>
-              <h5>AVOLA - Pulverizador Autopropelido</h5>
-            </center>
-
-            {}
-            <p className={style["texto-parceiros"]}>
-              Um pulverizador resistente e versátil com opções de reservatórios
-              de 2000 ou 2500 litros e barras de 25 a 30 metros. Equipado com um
-              motor de 190 cv e uma transmissão hidrostática bem ajustada, é
-              capaz de navegar... em diferentes tipos de terreno e superar
-              obstáculos devido ao seu baixo peso. Reservatórios: Disponível em
-              opções de 2000 ou 2500 litros. Alcance: Barras de 25 a 30 metros
-              para cobertura eficaz. Potência: Motor de 190 cv para desempenho
-              superior. Versatilidade: Adapte-se a diversos tipos de terreno com
-              sua transmissão hidrostática. Confiabilidade: Supere obstáculos
-              com facilidade devido ao seu baixo peso.
-              {}
-            </p>
-            <p className={style["ler-mais"]}>Ler mais</p>
-
-            <div>
-              <img
-                className={style["imagem-parceiros"]}
-                src="https://www.baldan.com.br/uploads/pagina/elemento/campo/2023/04/7ie7DCK5iso4CMe3/00-avola-baldan.webp"
-                alt="Pulverizador Autopropelido da Baldan"
-              />
-            </div>
-
-            <div className={style["botoes-container"]}>
-              <img
-                className={style["curtirFavoritar"]}
-                src="/img/coracao.png"
-                alt="Curtir"
-              />
-
-              <button className={style["btn-saibamais"]} type="button">
-                Entrar na publicação
-              </button>
-              <img
-                className={style["curtirFavoritar"]}
-                src="/img/favorito.png"
-                alt="Favoritar"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
+        </section>
+      ))}
+      {shareMessage && <div className={style["share-message"]}>{shareMessage}</div>}
+    </div>
+    
     </>
   );
 };
 
-export default Maquinas;
+export default Maquinas;  
