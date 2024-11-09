@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import styles from './NavBar.module.css';
@@ -12,26 +12,15 @@ const NavBar = () => {
   const [menuVisible, setMenuVisible] = useState(false);
   const navigate = useNavigate();
   const { currentUser } = useAuth();
+  const location = useLocation();
 
   const toggleMenuVisibility = () => {
     setMenuVisible(!menuVisible);
   };
 
   const handleScrollToSobre = () => {
-    if (window.location.pathname !== '/') {
-      navigate('/');
-      setTimeout(() => {
-        const sobreElement = document.getElementById('sobre');
-        if (sobreElement) {
-          sobreElement.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    } else {
-      const sobreElement = document.getElementById('sobre');
-      if (sobreElement) {
-        sobreElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
+    // Redirecionar diretamente para a página /sobre
+    navigate('/sobre');
   };
 
   const handleLogout = async () => {
@@ -41,8 +30,7 @@ const NavBar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY;
-      setScrolled(offset > 50);
+      setScrolled(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -51,7 +39,7 @@ const NavBar = () => {
     };
   }, []);
 
-  const navbarClasses = `navbar fixed-top navbar-expand-lg navbar-light bg-light`;
+  const navbarClasses = `navbar fixed-top navbar-expand-lg navbar-light bg-light ${scrolled ? styles.scrolled : ''}`;
 
   return (
     <nav className={navbarClasses}>
@@ -67,7 +55,7 @@ const NavBar = () => {
           <div className="mx-auto d-flex align-items-center justify-content-center">
             <ul className={`navbar-nav ${styles.menu}`}>
               <li className={`nav-item ${styles.navItem}`}>
-                <NavLink className="nav-link" to="/" activeClassName={styles.active}>
+                <NavLink className={({ isActive }) => isActive ? `${styles.active} nav-link` : 'nav-link'} to="/">
                   <i className={`fas fa-home ${styles.iconLarge}`}></i> Home
                 </NavLink>
               </li>
@@ -77,18 +65,18 @@ const NavBar = () => {
                 </span>
               </li>
               <li className={`nav-item ${styles.navItem}`}>
-                <NavLink className="nav-link" to="/eventos" activeClassName={styles.active}>
+                <NavLink className={({ isActive }) => isActive ? `${styles.active} nav-link` : 'nav-link'} to="/eventos">
                   <i className={`fas fa-calendar-alt ${styles.iconLarge}`}></i> Eventos
                 </NavLink>
               </li>
               <li className={`nav-item ${styles.navItem}`}>
-                <NavLink className="nav-link" to="/blog" activeClassName={styles.active}>
+                <NavLink className={({ isActive }) => isActive ? `${styles.active} nav-link` : 'nav-link'} to="/blog">
                   <i className={`fas fa-pencil-alt ${styles.iconLarge}`}></i> Blog
                 </NavLink>
               </li>
               {!currentUser && (
                 <li className={`nav-item ${styles.navItem}`}>
-                  <NavLink className="nav-link" to="/login" activeClassName={styles.active}>
+                  <NavLink className={({ isActive }) => isActive ? `${styles.active} nav-link` : 'nav-link'} to="/login">
                     <i className={`fas fa-sign-in-alt ${styles.iconLarge}`}></i> Login
                   </NavLink>
                 </li>
@@ -96,7 +84,7 @@ const NavBar = () => {
               {currentUser && (
                 <>
                   <li className={`nav-item ${styles.navItem}`}>
-                    <NavLink className="nav-link" to="/perfil" activeClassName={styles.active}>
+                    <NavLink className={({ isActive }) => isActive ? `${styles.active} nav-link` : 'nav-link'} to="/perfil">
                       <i className={`fas fa-user ${styles.iconLarge}`}></i> Perfil
                     </NavLink>
                   </li>
