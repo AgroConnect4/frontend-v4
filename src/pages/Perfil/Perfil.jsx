@@ -3,26 +3,19 @@ import { useNavigate } from "react-router-dom";
 import style from "./Perfil.module.css";
 import BotaoTopo from "../../components/BotaoTopo/BotaoTopo";
 import Footer from "../../components/Footer/Footer";
-import Botaogeral from "../Botaogeral.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Perfil = () => {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
-
-  // Estados para armazenar as imagens de perfil, capa e banner carregadas
-  const [profilePhoto, setProfilePhoto] = useState("/img/profile-photo.jpg"); // Imagem padrão de perfil
-  const [coverPhoto, setCoverPhoto] = useState("/img/cover-photo.jpg"); // Imagem padrão de capa
-  const [bannerPhoto, setBannerPhoto] = useState("/img/banner.jpg"); // Imagem padrão do banner
-
-  
-
-  
-  // Estados para nome e descrição do perfil
+  const [profilePhoto, setProfilePhoto] = useState("/img/profile-photo.jpg");
+  const [coverPhoto, setCoverPhoto] = useState("/img/cover-photo.jpg");
+  const [bannerPhoto, setBannerPhoto] = useState("/img/banner.jpg");
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("kamily simeao");
   const [description, setDescription] = useState("ooooi kskshhrhrhrhieiduydud");
 
-  // Funções para lidar com o upload de imagem
   const handleProfilePhotoUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -67,7 +60,6 @@ const Perfil = () => {
   return (
     <>
       <div className={style.container}>
-        {/* Banner com opção de upload */}
         <div className={style.banner}>
           <label htmlFor="banner-upload" className={style.bannerPhotoLabel}>
             <img className={style.bannerPhoto} src={bannerPhoto} alt="Banner do perfil" />
@@ -79,8 +71,6 @@ const Perfil = () => {
             onChange={handleBannerPhotoUpload}
             accept="image/*"
           />
-
-          {/* Capa com opção de upload */}
           <label htmlFor="cover-upload" className={style.coverPhotoLabel}>
             <img className={style.coverPhoto} src={coverPhoto} alt="Capa do perfil" />
           </label>
@@ -91,8 +81,6 @@ const Perfil = () => {
             onChange={handleCoverPhotoUpload}
             accept="image/*"
           />
-
-          {/* Foto de perfil com opção de upload */}
           <div className={style.profilePhotoContainer}>
             <label htmlFor="profile-upload">
               <img className={style.profilePhoto} src={profilePhoto} alt="Foto de perfil" />
@@ -105,16 +93,14 @@ const Perfil = () => {
               accept="image/*"
             />
           </div>
-
           <img
             className={style.editIcon}
-            src="/img/edit-icon.png" // ícone de edição
+            src="/img/edit-icon.png"
             alt="Editar perfil"
             onClick={toggleEditing}
           />
         </div>
 
-        {/* Informações do Perfil e Edição */}
         <div className={style.profileInfo}>
           {isEditing ? (
             <>
@@ -136,14 +122,14 @@ const Perfil = () => {
           ) : (
             <>
               <h1 className={style.userName}>{name}</h1>
-              <button onClick={handleCriarClick} className={Botaogeral["btn-primary"]}>
-                Criar publicação
+              {/* Botão de Conectar */}
+              <button className={style.connectButton}>
+                <FontAwesomeIcon icon={faPlus} /> Conectar
               </button>
             </>
           )}
         </div>
 
-        {/* Descrição */}
         <div className={style.aboutSection}>
           <p>
             {isExpanded ? description : description.slice(0, 50) + "..."}
@@ -153,9 +139,12 @@ const Perfil = () => {
           </button>
         </div>
 
-        {/* Postagens */}
         <div className={style.postsSection}>
           <h2>Postagens</h2>
+          {/* Botão "Criar publicação" dentro da seção de postagens */}
+          <button onClick={handleCriarClick} className={style.criarButton}>
+            Criar publicação
+          </button>
           <div className={style.post}>
             <div className={style.postHeader}>
               <img src={profilePhoto} alt="Foto de perfil" />

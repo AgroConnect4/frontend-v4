@@ -5,9 +5,42 @@
     font-family: Arial, sans-serif;
   }
   
+ 
+  
 
-
-
+  .criarButton {
+    padding: 8px 16px;
+    background-color: #14af00;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .criarButton:hover {
+    background-color: #045b20;
+  }
+  
+  .connectButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    border-radius: 20px; /* Bordas arredondadas */
+    background-color: #0077d1; /* Cor do botão de conectar */
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .connectButton:hover {
+    background-color: #0544f4;
+  }
+  
   
   .banner {
     position: relative;
