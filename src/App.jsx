@@ -19,6 +19,7 @@ import EditarPerfil from "./pages/EditarPerfil/EditarPerfil";
 import Eventos from "./pages/Eventos/Eventos"; // Importe o componente Eventos
 import CriarEvento from "./pages/CriarEvento/CriarEvento"; // Importe a página de Criar Evento
 import Sobre from "./pages/Sobre/Sobre";
+import Pesquisar from "./pages/Pesquisar/Pesquisar";
 
 import { AuthProvider } from '../src/Firebase/AuthContext';
 
@@ -53,6 +54,7 @@ function App() {
             <Route path="/eventos" element={<Eventos />} /> {/* Rota para a página de eventos */}
             <Route path="/criarevento" element={<CriarEvento />} /> {/* Rota para a página de criar evento */}
             <Route path="/sobre" element={<Sobre />} /> {/* Adicionada a rota para a página Sobre */}
+            <Route path="/pesquisar" element={<Pesquisar/>} /> {/* Adicionada a rota para a página Sobre */}
           </Routes>
         </div>
       </BrowserRouter>
