@@ -19,13 +19,16 @@ const NavBar = () => {
   };
 
   const handleScrollToSobre = () => {
-    // Redirecionar diretamente para a página /sobre
     navigate('/sobre');
   };
 
   const handleLogout = async () => {
     await signOut(auth);
     navigate('/');
+  };
+
+  const handleSearchRedirect = () => {
+    navigate('/pesquisar');
   };
 
   useEffect(() => {
@@ -74,14 +77,13 @@ const NavBar = () => {
                   <i className={`fas fa-pencil-alt ${styles.iconLarge}`}></i> Blog
                 </NavLink>
               </li>
-              {!currentUser && (
+              {!currentUser ? (
                 <li className={`nav-item ${styles.navItem}`}>
                   <NavLink className={({ isActive }) => isActive ? `${styles.active} nav-link` : 'nav-link'} to="/login">
                     <i className={`fas fa-sign-in-alt ${styles.iconLarge}`}></i> Login
                   </NavLink>
                 </li>
-              )}
-              {currentUser && (
+              ) : (
                 <>
                   <li className={`nav-item ${styles.navItem}`}>
                     <NavLink className={({ isActive }) => isActive ? `${styles.active} nav-link` : 'nav-link'} to="/perfil">
@@ -97,12 +99,9 @@ const NavBar = () => {
               )}
             </ul>
           </div>
-          <form className="d-flex ms-auto">
-            <input className="form-control me-2" type="search" placeholder="Pesquisar..." aria-label="Search" />
-            <button className="btn btn-outline-success" type="submit">
-              <i className={`fas fa-search ${styles.iconLarge}`}></i>
-            </button>
-          </form>
+          <button className="btn ms-auto" onClick={handleSearchRedirect} style={{ cursor: 'pointer' }}>
+            <i className={`fas fa-search ${styles.iconLarge}`}></i> Pesquisar
+          </button>
         </div>
       </div>
     </nav>
