@@ -10,6 +10,16 @@
   box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px 0 0 8px;
 }
+.feed-title {
+  font-size: 3.5rem; /* Tamanho maior do título */
+  font-weight: bold; /* Tornar o título em negrito */
+  color: #28a745; /* Cor verde */
+  text-transform: uppercase; /* Colocar o título em maiúsculas */
+  margin-bottom: 20px; /* Espaço abaixo do título */
+  letter-spacing: 2px; /* Aumentar o espaçamento das letras */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra suave no texto */
+  background-color: #333;
+}
 
 .category-icon {
   display: flex;
@@ -333,4 +343,105 @@
   .home-container {
     background-image: url('/img/cardf4 (2).png');
   }
+}
+.home-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.content-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.publicacoes-container {
+  flex: 2; /* A maior parte do espaço é para as publicações */
+  padding-right: 20px;
+}
+
+.side-container {
+  flex: 1; /* A menor parte do espaço é para as conexões e eventos */
+}
+
+.section-connections, .section-events {
+  margin-bottom: 30px;
+}
+
+.connection-item, .event-item {
+  margin-bottom: 15px;
+}
+
+.connection-img, .event-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.btn-connect, .btn-participar {
+  margin-top: 10px;
+}
+.connection-item {
+  display: flex; /* Alinha os itens em linha */
+  align-items: center; /* Alinha verticalmente */
+  margin-bottom: 10px; /* Espaço entre as conexões */
+}
+
+.connection-img {
+  width: 40px; /* Ajuste o tamanho da imagem */
+  height: 40px; /* Ajuste o tamanho da imagem */
+  border-radius: 50%; /* Faz a imagem ficar redonda */
+  margin-right: 10px; /* Espaço entre a imagem e o nome */
+}
+
+h4 {
+  margin: 0; /* Remove o margin padrão do título */
+}
+.event-item {
+  display: flex; /* Alinha a imagem e o título em linha */
+  align-items: center; /* Alinha verticalmente */
+  margin-bottom: 10px; /* Espaço entre os eventos */
+}
+
+.event-img {
+  width: 50px; /* Ajuste o tamanho da imagem */
+  height: 50px; /* Ajuste o tamanho da imagem */
+  border-radius: 50%; /* Torna a imagem redonda */
+  margin-right: 15px; /* Espaço entre a imagem e o título */
+}
+
+h4 {
+  margin: 0; /* Remove o margin padrão do título */
+  font-size: 18px; /* Ajuste o tamanho da fonte do título */
+}
+/* Ocultar as seções de Conexões e Eventos em telas pequenas */
+@media (max-width: 768px) {
+  .section-connections,
+  .section-events {
+    display: none; /* Esconde as seções */
+  }
+}
+.publicacoes-container {
+  display: flex;
+  flex-direction: column; /* Para as postagens ficarem em uma coluna */
+  align-items: center; /* Centraliza horizontalmente */
+  justify-content: center; /* Centraliza verticalmente */
+  width: 100%;
+}
+
+.content-row {
+  display: flex;
+  justify-content: center; /* Centraliza a linha de conteúdo */
+  gap: 20px; /* Espaço entre as colunas, caso tenha mais de uma */
+  flex-wrap: wrap; /* Para que os itens se ajustem conforme necessário */
+  width: 100%;
+  padding: 20px 0;
 }
