@@ -10,6 +10,7 @@ import { auth } from '../../Firebase/Firebaseconfig';
 const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
+  const [notifications, setNotifications] = useState(3); // Exemplo de número de notificações
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const location = useLocation();
@@ -97,8 +98,21 @@ const NavBar = () => {
                   </li>
                 </>
               )}
+              {/* Adicionando o ícone de notificação */}
+              <li className={`nav-item ${styles.navItem}`}>
+                <NavLink to="/notificacao" className="btn position-relative me-3">
+                  <i className={`fas fa-bell ${styles.iconLarge}`}></i>
+                  {notifications > 0 && (
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      {notifications}
+                      <span className="visually-hidden">new notifications</span>
+                    </span>
+                  )}
+                </NavLink>
+              </li>
             </ul>
           </div>
+          
           <button className="btn ms-auto" onClick={handleSearchRedirect} style={{ cursor: 'pointer' }}>
             <i className={`fas fa-search ${styles.iconLarge}`}></i> Pesquisar
           </button>
