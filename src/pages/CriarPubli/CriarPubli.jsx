@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import style from './CriarPubli.module.css';
-import Notificacao from '../../components/Notificacao/Notificacao';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 

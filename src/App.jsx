@@ -21,7 +21,9 @@ import CriarEvento from "./pages/CriarEvento/CriarEvento"; // Importe a página 
 import Sobre from "./pages/Sobre/Sobre";
 import Pesquisar from "./pages/Pesquisar/Pesquisar";
 
+
 import { AuthProvider } from '../src/Firebase/AuthContext';
+import Notificacao from "./pages/Notificacao/Notificacao";
 
 function App() {
   const publicacoesRef = useRef(null);
@@ -51,10 +53,11 @@ function App() {
             <Route path="/dashboard" element={<DashBoard />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/editarperfil" element={<EditarPerfil />} />
-            <Route path="/eventos" element={<Eventos />} /> {/* Rota para a página de eventos */}
-            <Route path="/criarevento" element={<CriarEvento />} /> {/* Rota para a página de criar evento */}
-            <Route path="/sobre" element={<Sobre />} /> {/* Adicionada a rota para a página Sobre */}
-            <Route path="/pesquisar" element={<Pesquisar/>} /> {/* Adicionada a rota para a página Sobre */}
+            <Route path="/eventos" element={<Eventos />} />
+            <Route path="/criarevento" element={<CriarEvento />} />
+            <Route path="/sobre" element={<Sobre />} />
+            <Route path="/pesquisar" element={<Pesquisar/>} />
+            <Route path="/notificacao" element={<Notificacao />} /> {/* Nova rota para notificações */}
           </Routes>
         </div>
       </BrowserRouter>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Notificacao from '../../components/Notificacao/Notificacao'; // Importe o componente de notificação
 import styles from './Login.module.css';
 import { auth } from '../../Firebase/Firebaseconfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
