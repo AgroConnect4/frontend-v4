@@ -152,8 +152,8 @@ const Blog = () => {
       <section className={styles.contactSection}>
         <center>
           <h2>Quer que sua notícia ou empresa apareça aqui?</h2>
-          <p>Entre em contato conosco para mais informações e parcerias!</p>
-          <a href="mailto:contato@seuemail.com" className={styles.contactButton}>Entre em contato</a>
+        
+         <center> <a href="https://docs.google.com/forms/d/e/1FAIpQLSf7PD_oTJZgn0QBidV6c5-pnS7CVSnTj08SDJCNJsdearbcow/viewform?usp=sf_link" className={styles.contactButton}>Envie sua noticia aqui</a></center>
         </center>
       </section>
     </div>
