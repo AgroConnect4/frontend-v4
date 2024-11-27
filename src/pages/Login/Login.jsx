@@ -1,50 +1,44 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
-import { auth } from '../../Firebase/Firebaseconfig';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons'; // Importe os ícones do FontAwesome
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Botaogeral from '../Botaogeral.module.css';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [form, setForm] = useState({
-    email: '',
-    senha: '',
-    lembrarMe: false // Novo estado para lembrar-me
-  });
-
-  const [notificacao, setNotificacao] = useState(null); // Estado de notificação
-
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const newValue = type === 'checkbox' ? checked : value;
-
-    setForm({ ...form, [name]: newValue });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+
     try {
-      await signInWithEmailAndPassword(auth, form.email, form.senha);
-      setNotificacao({ tipo: 'sucesso', mensagem: 'Login realizado com sucesso!' });
+      const response = await fetch('https://localhost:7297/api/Auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-      // Redireciona para o perfil após 2 segundos (para visualizar a notificação)
-      setTimeout(() => {
-        navigate('/perfil');
-      }, 2000);
+      if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error("Email ou senha incorretos. Por favor, tente novamente.");
+        } else {
+          const errorData = await response.json();
+          const errorMessage = errorData.errors ? errorData.errors.join(', ') : (errorData.message || "Um erro ocorreu. Tente novamente mais tarde.");
+          throw new Error(errorMessage);
+        }
+      }
+
+      const data = await response.json();
+      const token = data.token;
+      sessionStorage.setItem('token', token);
+      navigate('/perfil');
     } catch (error) {
-      setNotificacao({ tipo: 'erro', mensagem: 'Email ou senha incorretos. Por favor, tente novamente.' });
-
-      // Limpa a notificação após um período de tempo
-      setTimeout(() => {
-        setNotificacao(null);
-      }, 5000); // Tempo em milissegundos (5 segundos neste exemplo)
+      setError(error.message);
     }
   };
 
@@ -58,45 +52,26 @@ function Login() {
         <div className={`card-body ${styles.cardBody}`}>
           <h2 className={styles.formTitle}>Use uma conta para entrar.</h2>
           <hr className={styles.hrStyle} />
-          {notificacao && <Notificacao tipo={notificacao.tipo} mensagem={notificacao.mensagem} />} {/* Exibição da notificação */}
+          {error && <div className="alert alert-danger">{error}</div>}
           <form onSubmit={handleSubmit}>
             <input
               type="email"
-              name="email"
               placeholder="Email"
-              value={form.email}
-              onChange={handleChange}
-              className={`form-control ${styles.inputField} ${form.email ? styles['input-valid'] : styles['input-invalid']}`}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={`${styles.inputField}`}
               required
             />
-            {form.email && <FontAwesomeIcon icon={faCheckCircle} className={styles["icon-valid"]} />}
-            {!form.email && <FontAwesomeIcon icon={faExclamationCircle} className={styles["icon-invalid"]} />}
             <input
               type="password"
-              name="senha"
               placeholder="Senha"
-              value={form.senha}
-              onChange={handleChange}
-              className={`form-control ${styles.inputField} ${form.senha ? styles['input-valid'] : styles['input-invalid']}`}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={`${styles.inputField}`}
               required
             />
-            {form.senha && <FontAwesomeIcon icon={faCheckCircle} className={styles["icon-valid"]} />}
-            {!form.senha && <FontAwesomeIcon icon={faExclamationCircle} className={styles["icon-invalid"]} />}
-            <div className="form-check mb-3">
-              <input
-                type="checkbox"
-                id="lembrarMe"
-                name="lembrarMe"
-                checked={form.lembrarMe}
-                onChange={handleChange}
-                className="form-check-input"
-              />
-              <label className="form-check-label" htmlFor="lembrarMe">
-                Lembrar-me
-              </label>
-            </div>
             <div className={styles.buttonContainer}>
-              <button type="submit" className={`btn ${Botaogeral['btn-primary']}`}>
+              <button type="submit" className={`${styles['btn-primary']}`}>
                 Log in
               </button>
             </div>

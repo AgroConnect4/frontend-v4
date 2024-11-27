@@ -1,96 +1,156 @@
-import React, { useState } from 'react';
-import style from './CriarPubli.module.css';
+import React, { useState, useEffect } from 'react';
+import styles from './CriarPubli.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate, useParams } from 'react-router-dom';
 
-function CriarPubli() {
-    const [notificacao, setNotificacao] = useState(null);
-    const [titulo, setTitulo] = useState('');
-    const [descricao, setDescricao] = useState('');
-    const [imagem, setImagem] = useState(null); // Estado para armazenar a imagem
+const CriarPubli = () => {
+  const [publicacao, setPublicacao] = useState({
+      title: '',
+      content: '',
+      imageUrl: '',
+      categories: ['General'],
+  });
+  const [categories, setCategories] = useState([
+      { value: 'General', label: 'Geral' },
+      { value: 'Technology', label: 'Tecnologia' },
+      { value: 'Lifestyle', label: 'Estilo de Vida' },
+  ]);
+  const [token, setToken] = useState(null); // Token state
+  const [isLoading, setIsLoading] = useState(false); // Loading indicator
+  const [error, setError] = useState(null); // Error state
+  const navigate = useNavigate(); // For redirection
 
-    const handleChangeTitulo = (e) => {
-        setTitulo(e.target.value);
-    };
+  useEffect(() => {
+    const storedToken = sessionStorage.getItem('token'); // Corrected spelling
+    setToken(storedToken);
+  }, []);
 
-    const handleChangeDescricao = (e) => {
-        setDescricao(e.target.value);
-    };
+  const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setPublicacao({ ...publicacao, [name]: value });
+  };
 
-    const handleImageUpload = (e) => {
-        const file = e.target.files[0];
-        // Verifica se o arquivo é .png ou .jpg
-        if (file && (file.type === 'image/png' || file.type === 'image/jpeg')) {
-            setImagem(file);
-            setNotificacao(null); // Limpa a notificação de erro, se houver
-        } else {
-            setImagem(null);
-            setNotificacao({ tipo: 'erro', mensagem: 'Apenas arquivos PNG ou JPG são permitidos.' });
-        }
-    };
+  const handleCategoryChange = (e) => {
+      setPublicacao({ ...publicacao, categories: [e.target.value] });
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+  const handleFileChange = (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
 
-        // Verifica se o formulário é válido antes de prosseguir
-        if (e.target.checkValidity() && imagem) {
-            // Lógica para criar a postagem
-            setNotificacao({ tipo: 'sucesso', mensagem: 'Postagem criada com sucesso!' });
-        } else {
-            setNotificacao({ tipo: 'erro', mensagem: 'Por favor, preencha todos os campos corretamente e selecione uma imagem.' });
-        }
-    };
+      reader.onload = (event) => {
+          setPublicacao({ ...publicacao, imageUrl: event.target.result });
+      };
 
+      if (file) {
+          reader.readAsDataURL(file);
+      } else {
+          setPublicacao({ ...publicacao, imageUrl: '' });
+      }
+  };
+
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      setIsLoading(true);
+      setError(null);
+
+      try {
+          if (!token) {
+              throw new Error('Você precisa estar logado para criar uma publicação.');
+          }
+
+          const response = await fetch('https://localhost:7297/api/Posts/post', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`,
+              },
+              body: JSON.stringify(publicacao),
+          });
+
+          if (!response.ok) {
+              const errorData = await response.json();
+              let errorMessage = `HTTP error! status: ${response.status}`;
+              if (errorData && errorData.message) {
+                  errorMessage += ` ${errorData.message}`;
+              } else if (errorData && errorData.errors) {
+                  errorMessage += `  ${errorData.errors.join(', ')}`;
+              } else if (response.status === 401) {
+                  errorMessage = "Sessão expirada ou não autenticado. Faça login novamente.";
+                  sessionStorage.removeItem('token');
+                  navigate('/login');
+              }
+              throw new Error(errorMessage);
+          }
+
+          const data = await response.json();
+          console.log('Success:', data);
+          alert('Publicação criada com sucesso!');
+          //Consider redirecting to a different page after success
+          navigate('/posts');
+      } catch (error) {
+          setError(error.message);
+          console.error('Error:', error);
+      } finally {
+          setIsLoading(false);
+      }
+  };
+  
     return (
-        <div className={style["fundoIMG"]}>
-            <div className={style["container-publicacao"]}>
-                <div className={style["box-publicacao"]}>
-                    <div className={style["titulo-publicacao"]}>
-                        <a href=""><img src="../../../public/img/voltar.png" alt="" /></a>
-                        <h1>Criar postagem</h1>
-                    </div>
-                    <form className={style["form-publicacao"]} onSubmit={handleSubmit}>
-                        <label className={style["nomesCampos"]} htmlFor="">Título:
-                            <input
-                                className={`${style['publicacao-input-titulo']} ${titulo ? style['input-valid'] : style['input-invalid']}`}
-                                type="text"
-                                placeholder="Título da sua postagem"
-                                value={titulo}
-                                onChange={handleChangeTitulo}
-                                required
-                            />
-                            {titulo && <FontAwesomeIcon icon={faCheckCircle} className={style["icon-valid"]} />}
-                            {!titulo && <FontAwesomeIcon icon={faExclamationCircle} className={style["icon-invalid"]} />}
-                        </label>
-                        <label className={style["nomesCampos"]} htmlFor="">Descrição:
-                            <input
-                                className={`${style['publicacao-input-descricacao']} ${descricao ? style['input-valid'] : style['input-invalid']}`}
-                                type="text"
-                                placeholder="Conte-nos sobre sua postagem"
-                                value={descricao}
-                                onChange={handleChangeDescricao}
-                                required
-                            />
-                            {descricao && <FontAwesomeIcon icon={faCheckCircle} className={style["icon-valid"]} />}
-                            {!descricao && <FontAwesomeIcon icon={faExclamationCircle} className={style["icon-invalid"]} />}
-                        </label>
-                      
-                            <input
-                                type="file"
-                                accept="image/png, image/jpeg"
-                                onChange={handleImageUpload}
-                                required
-                                className={style["input-upload"]}
-                            />
-                      
-                        <button type="submit" className={style["btn-criacao-publi"]}>Criar publicação</button>
-                    </form>
-                </div>
-                {notificacao && <Notificacao tipo={notificacao.tipo} mensagem={notificacao.mensagem} />}
-            </div>
-        </div>
+      <div className={styles.container}>
+        <h2>Criar Nova Publicação</h2>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.inputGroup}>
+            <label htmlFor="title">Título</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={publicacao.title}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+  
+          <div className={styles.inputGroup}>
+            <label htmlFor="content">Conteúdo</label>
+            <textarea
+              id="content"
+              name="content"
+              value={publicacao.content}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+  
+          <div className={styles.inputGroup}>
+            <label htmlFor="categories">Categoria</label>
+            <select id="categories" name="categories" value={publicacao.categories[0]} onChange={handleCategoryChange} required>
+              {categories.map((category) => (
+                <option key={category.value} value={category.value}>{category.label}</option>
+              ))}
+            </select>
+          </div>
+  
+          <div className={styles.inputGroup}>
+            <label htmlFor="imageUrl">Imagem</label>
+            <input
+              type="file"
+              id="imageUrl"
+              name="imageUrl"
+              onChange={handleFileChange}
+              accept="image/*"
+            />
+          </div>
+  
+          <button type="submit" className={styles.submitButton}>
+            Criar Publicação
+          </button>
+        </form>
+      </div>
     );
-}
-
-export default CriarPubli;
+  };
+  
+  export default CriarPubli;
 

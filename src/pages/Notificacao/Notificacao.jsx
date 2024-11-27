@@ -1,36 +1,75 @@
 import React, { useState, useEffect } from 'react';
-import styles from './Notificacao.module.css';
+import { useNavigate } from 'react-router-dom';
 
-const Notificacao = () => {
-  const [notificacoes, setNotificacoes] = useState([
-    { id: 1, mensagem: 'Nova atualização disponível!', lida: false },
-    { id: 2, mensagem: 'Seu pedido foi enviado.', lida: false },
-    { id: 3, mensagem: 'Lembrete: Reunião amanhã às 10h.', lida: true },
-  ]);
+const Notification = () => {
+  const [notifications, setNotifications] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  // Função para marcar notificação como lida
-  const marcarComoLida = (id) => {
-    setNotificacoes(notificacoes.map(notificacao =>
-      notificacao.id === id ? { ...notificacao, lida: true } : notificacao
-    ));
-  };
+  useEffect(() => {
+    const storedToken = sessionStorage.getItem('token');
+
+    const fetchNotifications = async () => {
+      try {
+        if (!storedToken) {
+          navigate('/login');
+          return;
+        }
+
+        const response = await fetch('https://localhost:7297/api/Notification${useId}', {
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+          },
+        });
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            sessionStorage.removeItem('token');
+            navigate('/login');
+            return;
+          }
+          const errorData = await response.json();
+          throw new Error(errorData.message || `HTTP error ${response.status}`);
+        }
+
+        const data = await response.json();
+        setNotifications(data);
+      } catch (error) {
+        setError(error.message);
+        console.error('Error fetching notifications:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNotifications();
+  }, [navigate]); // navigate is in the dependency array for correct redirect
+
+  if (loading) {
+    return <div>Carregando notificações...</div>;
+  }
+
+  if (error) {
+    return <div>Erro ao carregar notificações: {error}</div>;
+  }
 
   return (
-    <div className={styles.container}>
+    <div>
       <h2>Notificações</h2>
-      <ul className={styles.listaNotificacoes}>
-        {notificacoes.map((notificacao) => (
-          <li
-            key={notificacao.id}
-            className={`${styles.notificacao} ${notificacao.lida ? styles.lida : ''}`}
-            onClick={() => marcarComoLida(notificacao.id)}
-          >
-            {notificacao.mensagem}
-          </li>
-        ))}
-      </ul>
+      {notifications.length === 0 ? (
+        <p>Sem notificações.</p>
+      ) : (
+        <ul>
+          {notifications.map((notification) => (
+            <li key={notification.id || notification.message}> {/*Use a unique key - consider adding a timestamp to the notification object if id is not available */}
+              {notification.message} {/* Add sender, timestamp, etc. as needed */}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
 
-export default Notificacao;
+export default Notification;
