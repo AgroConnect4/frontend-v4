@@ -1,85 +1,85 @@
-.input-valid {
-  border-color: #28a745;
+.containerLogin {
+  background: url("/src/assets/pl.png") lightgray 100% / cover no-repeat; /* Adjust image path */
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.input-invalid {
-  border-color: #dc3545;
+.card {
+  max-width: 600px; /* Adjust width as needed */
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9; /* Light gray background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-.containerLogin{
-    background: url("/src/assets/pl.png") lightgray 100% / cover no-repeat;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  
-  }
-  
-  .loginAzul{
-    cursor: pointer;
-    color: #007bff !important;
-  }
-  .container {
-    width: 983px;
-    height: 614px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.70);
-    margin: auto; /* Centraliza o form-container */
-    margin-left: 5%;
-    margin-top: 7%;
-  }
-  .card{
-    background-color: rgba(240, 248, 255, 0.644);
-  }
-  .formTitle {
-    margin-bottom: -5px;
-    color: #04AB07;
-    font-size: 50px;
-    text-align: center; /* Alinha o texto ao centro */
-  }
-  
-  input {
-    width: 90%;
-    padding: 10px;
-    margin: 10px auto; /* Centraliza os inputs horizontalmente */
-    display: block; /* Faz os inputs ocuparem uma linha inteira */
-    border: 1px solid #ddd;
-    border-radius: 20px;
-  }
-  
-  
-  .submitButton {
-    width: 70%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    display: block; /* Faz o botão ocupar uma linha inteira */
-    margin: 10px auto; /* Centraliza o botão horizontalmente */
-  }
-  
-  .loginLink {
-    text-align: center;
-    display: block;
-    margin-top: 10px;
-    text-decoration: none;
-    color: black;
-  }
-  
-  .form-container input::placeholder {
-    color: rgb(0, 0, 0);
-    font-weight: bold;
-  }
-  
-  span {
-    color: #007bff;
-  }
-  
-  svg {
-    top: 20px;
-  }
-  
+.card-body {
+  padding: 30px; /* Increased padding for better spacing */
+}
+
+.formTitle {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #04AB07; /* Green title color */
+  font-size: 2em; /* Adjust font size as needed */
+}
+
+.hrStyle {
+  border-top: 1px solid #ddd; /* Light gray line */
+  margin: 20px 0;
+}
+
+.inputField {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px; /* Spacing between fields */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+.buttonContainer {
+  text-align: center; /* Center the button */
+  margin-top: 20px;
+}
+
+.btn-primary {
+  padding: 10px 20px;
+  background-color: #4CAF50; /* Green button color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em; /* Adjust font size */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.btn-primary:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.loginLinkContainer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.loginLink {
+  display: block;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #333; /* Dark gray link color */
+}
+
+.loginLink span {
+  color: #007bff; /* Blue highlight color */
+}
+
+/* Bootstrap alert styling override (optional, for consistency) */
+.alert-danger {
+  background-color: #f8d7da; /* Light red background for errors */
+  border-color: #f5c6cb;
+}

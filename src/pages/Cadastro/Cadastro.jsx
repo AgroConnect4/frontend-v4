@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Cadastro.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons'; // Importe os ícones do FontAwesome
+import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Botaogeral from '../Botaogeral.module.css'
+import Botaogeral from '../Botaogeral.module.css';
 
 function SignupForm() {
   const [form, setForm] = useState({
-    nome: '',
-    telefone: '',
+    username: '',
     email: '',
-    cnpjCpf: '',
-    senha: '',
-    confirmarSenha: ''
+    password: '',
+    confirmPassword: ''
   });
 
   const [notificacao, setNotificacao] = useState(null);
-  const [senhaValida, setSenhaValida] = useState(true);
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
 
   const navigate = useNavigate();
 
@@ -28,128 +28,149 @@ function SignupForm() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
+    setPasswordsMatch(name !== 'confirmPassword' || form.password === value);
+    setFormErrors({ ...formErrors, [name]: '' });
   };
 
-  const handleSenhaChange = (e) => {
-    const { value } = e.target;
-    const confirmarSenha = form.confirmarSenha;
-    setForm({ ...form, senha: value });
-    setSenhaValida(value === confirmarSenha);
-  };
-
-  const handleConfirmarSenhaChange = (e) => {
-    const { value } = e.target;
-    const senha = form.senha;
-    setForm({ ...form, confirmarSenha: value });
-    setSenhaValida(value === senha);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
+    setIsLoading(true);
+    setFormErrors({});
 
-    // Simulando uma resposta de sucesso
-    setNotificacao({ tipo: 'sucesso', mensagem: 'Solicitação de cadastro enviada com sucesso!' });
+    // Client-side password validation
+    if (!passwordsMatch) {
+      setFormErrors({ confirmPassword: 'Senhas não conferem.' });
+      setIsLoading(false);
+      return;
+    }
 
-    // Simulando uma resposta de erro (descomente para testar):
-    // setNotificacao({ tipo: 'erro', mensagem: 'Erro ao enviar a solicitação de cadastro.' });
+    // Basic empty field validation
+    if (form.username.trim() === '' || form.email.trim() === '' || form.password.trim() === '') {
+      setFormErrors({
+        username: form.username.trim() === '' ? 'Nome de Usuário obrigatório' : '',
+        email: form.email.trim() === '' ? 'Email obrigatório' : '',
+        password: form.password.trim() === '' ? 'Senha obrigatória' : ''
+      });
+      setIsLoading(false);
+      return;
+    }
+
+
+    try {
+      const response = await fetch('https://localhost:7297/api/Auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: form.username, email: form.email, password: form.password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setNotificacao({ tipo: 'sucesso', mensagem: data.message || 'Cadastro realizado com sucesso!' });
+        navigate('/login');
+      } else if (response.status === 400) {
+        const errorData = await response.json();
+        let errorMessage = '';
+        if (errorData.errors && Array.isArray(errorData.errors)) {
+          errorMessage = errorData.errors.join('\n');
+        } else if (errorData.message) {
+          errorMessage = errorData.message;
+        } else {
+          errorMessage = 'Erro no cadastro.';
+        }
+        setFormErrors({ general: errorMessage });
+      } else if (response.status === 409) {
+        setFormErrors({ general: "Email já cadastrado." });
+      } else {
+        setFormErrors({ general: `Erro no servidor. Código de status: ${response.status}` });
+      }
+    } catch (error) {
+      setFormErrors({ general: 'Erro inesperado. Por favor, tente novamente.' });
+      console.error("Error during registration:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className={styles.containerLogin}>
-      <div className={styles.container}>
-        <div className="card">
-          <div className="card-body">
-            <h2 className="card-title">Criar uma nova conta</h2>
-            <hr />
-
-            {notificacao && <Notificacao tipo={notificacao.tipo} mensagem={notificacao.mensagem} />}
-
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <input
-                  type="text"
-                  name="nome"
-                  placeholder="Nome"
-                  value={form.nome}
-                  onChange={handleChange}
-                  className={`form-control ${styles.inputField}`}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <input
-                  type="text"
-                  name="telefone"
-                  placeholder="Telefone"
-                  value={form.telefone}
-                  onChange={handleChange}
-                  className={`form-control ${styles.inputField}`}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={form.email}
-                  onChange={handleChange}
-                  className={`form-control ${styles.inputField} ${form.email && styles['input-valid']} ${!form.email && styles['input-invalid']}`}
-                  required
-                />
-                {form.email && <FontAwesomeIcon icon={faCheckCircle} className={styles["icon-valid"]} />}
-                {!form.email && <FontAwesomeIcon icon={faExclamationCircle} className={styles["icon-invalid"]} />}
-              </div>
-              <div className="mb-3">
-                <input
-                  type="text"
-                  name="cnpjCpf"
-                  placeholder="CNPJ/CPF"
-                  value={form.cnpjCpf}
-                  onChange={handleChange}
-                  className={`form-control ${styles.inputField}`}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <input
-                  type="password"
-                  name="senha"
-                  placeholder="Senha"
-                  value={form.senha}
-                  onChange={handleSenhaChange}
-                  className={`form-control ${styles.inputField} ${senhaValida && styles['input-valid']} ${!senhaValida && styles['input-invalid']}`}
-                  required
-                />
-                {senhaValida && <FontAwesomeIcon icon={faCheckCircle} className={styles["icon-valid"]} />}
-                {!senhaValida && <FontAwesomeIcon icon={faExclamationCircle} className={styles["icon-invalid"]} />}
-              </div>
-              <div className="mb-3">
-                <input
-                  type="password"
-                  name="confirmarSenha"
-                  placeholder="Confirmar senha"
-                  value={form.confirmarSenha}
-                  onChange={handleConfirmarSenhaChange}
-                  className={`form-control ${styles.inputField} ${senhaValida && styles['input-valid']} ${!senhaValida && styles['input-invalid']}`}
-                  required
-                />
-                {senhaValida && <FontAwesomeIcon icon={faCheckCircle} className={styles["icon-valid"]} />}
-                {!senhaValida && <FontAwesomeIcon icon={faExclamationCircle} className={styles["icon-invalid"]} />}
-              </div>
-              <div className="d-grid gap-2">
-                <button type="submit" className={Botaogeral['btn-primary']}>
-                  Cadastrar-se
-                </button>
-              </div>
-            </form>
-            <div className="mt-3">
-              <a href="#" onClick={handleLoginClick}>
-                Já possui conta? <span className="text-primary">Faça login</span>
-              </a>
+      <div className={`card ${styles.card}`}>
+        <div className={`card-body ${styles.cardBody}`}>
+          <h2 className={styles.formTitle}>Criar uma nova conta</h2>
+          <hr className={styles.hrStyle} />
+          {notificacao && (
+            <div className={`alert alert-${notificacao.tipo}`}>
+              {notificacao.mensagem}
             </div>
+          )}
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3"> {/* Bootstrap spacing */}
+              <label htmlFor="username" className="form-label">Nome de Usuário</label> {/* Added label */}
+              <input
+                type="text"
+                id="username" 
+                name="username"
+                placeholder="Nome de Usuário"
+                value={form.username}
+                onChange={handleChange}
+                className={`form-control ${styles.inputField} ${formErrors.username && styles['input-invalid']}`}
+                required
+              />
+              {formErrors.username && <span className={styles['error-message']}>{formErrors.username}</span>}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">Email</label> {/* Added label */}
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email"
+                value={form.email}
+                onChange={handleChange}
+                className={`form-control ${styles.inputField} ${formErrors.email && styles['input-invalid']}`}
+                required
+              />
+              {formErrors.email && <span className={styles['error-message']}>{formErrors.email}</span>}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Senha</label> {/* Added label */}
+              <input
+                type="password"
+                id="password" 
+                name="password"
+                placeholder="Senha"
+                value={form.password}
+                onChange={handleChange}
+                className={`form-control ${styles.inputField} ${formErrors.password && styles['input-invalid']}`}
+                required
+              />
+              {formErrors.password && <span className={styles['error-message']}>{formErrors.password}</span>}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="confirmPassword" className="form-label">Confirmar Senha</label> {/* Added label */}
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirmar Senha"
+                value={form.confirmPassword}
+                onChange={handleChange}
+                className={`form-control ${styles.inputField} ${!passwordsMatch && styles['input-invalid']}`}
+                required
+              />
+              {!passwordsMatch && <span className={styles['error-message']}>Senhas não conferem.</span>}
+            </div>
+            <div className={styles.buttonContainer}>
+              <button type="submit" className={`${styles['btn-primary']} ${isLoading ? styles['loading-button'] : ''}`} disabled={isLoading}>
+                {isLoading ? 'Cadastrando...' : 'Cadastrar-se'}
+              </button>
+            </div>
+          </form>
+          <div className={styles.loginLinkContainer}>
+            <a href="#" onClick={handleLoginClick}>Já possui conta? <span className="text-primary">Faça login</span></a>
           </div>
+          {formErrors.general && <div className="alert alert-danger mt-3">{formErrors.general}</div>}
         </div>
       </div>
     </div>

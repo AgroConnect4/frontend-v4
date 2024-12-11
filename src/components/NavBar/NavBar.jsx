@@ -3,16 +3,13 @@ import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import styles from './NavBar.module.css';
-import { useAuth } from '../../Firebase/AuthContext';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../Firebase/Firebaseconfig';
+
 
 const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
   const [notifications, setNotifications] = useState(3); // Exemplo de número de notificações
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
   const location = useLocation();
 
   const toggleMenuVisibility = () => {
@@ -23,9 +20,9 @@ const NavBar = () => {
     navigate('/sobre');
   };
 
-  const handleLogout = async () => {
-    await signOut(auth);
-    navigate('/');
+  const handleLogout = () => {
+    sessionStorage.removeItem('token'); // Remove token from session storage
+    navigate('/'); // Redirect to home after logout
   };
 
   const handleSearchRedirect = () => {
@@ -44,6 +41,8 @@ const NavBar = () => {
   }, []);
 
   const navbarClasses = `navbar fixed-top navbar-expand-lg navbar-light bg-light ${scrolled ? styles.scrolled : ''}`;
+
+  const isLoggedIn = !!sessionStorage.getItem('token'); // Check for token in session storage
 
   return (
     <nav className={navbarClasses}>
@@ -78,7 +77,7 @@ const NavBar = () => {
                   <i className={`fas fa-pencil-alt ${styles.iconLarge}`}></i> Blog
                 </NavLink>
               </li>
-              {!currentUser ? (
+              {!isLoggedIn ? (
                 <li className={`nav-item ${styles.navItem}`}>
                   <NavLink className={({ isActive }) => isActive ? `${styles.active} nav-link` : 'nav-link'} to="/login">
                     <i className={`fas fa-sign-in-alt ${styles.iconLarge}`}></i> Login
@@ -112,7 +111,7 @@ const NavBar = () => {
               </li>
             </ul>
           </div>
-          
+
           <button className="btn ms-auto" onClick={handleSearchRedirect} style={{ cursor: 'pointer' }}>
             <i className={`fas fa-search ${styles.iconLarge}`}></i> Pesquisar
           </button>

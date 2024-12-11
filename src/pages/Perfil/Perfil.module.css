@@ -1,159 +1,157 @@
 .container {
-    width: 100%;
-    max-width: 800px;
-    margin: auto;
-    font-family: Arial, sans-serif;
-  }
-  
- 
-  
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+}
 
-  .criarButton {
-    padding: 8px 16px;
-    background-color: #14af00;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
-  
-  .criarButton:hover {
-    background-color: #045b20;
-  }
-  
-  .connectButton {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 8px 12px;
-    border-radius: 20px; /* Bordas arredondadas */
-    background-color: #0077d1; /* Cor do botão de conectar */
-    color: #fff;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .connectButton:hover {
-    background-color: #0544f4;
-  }
-  
-  
-  .banner {
-    position: relative;
-    width: 100%;
-    height: 250px;
-    background-image: url("https://avatars.mds.yandex.net/i?id=26b1c76df73eac5820c6b6a4147dd7eb1c10750d-12521952-images-thumbs&n=13");
-  }
-  
-  .coverPhoto {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 20px; /* Opção para cantos arredondados, se preferir */
-  }
-  
-  .profilePhotoContainer {
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    bottom: -70px;
-    left: 20px;
-  }
-  
-  .profilePhoto {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%; /* Faz a imagem ser circular */
-    border: 3px solid white;
-    object-fit: cover; /* Mantém a proporção da imagem */
-  }
-  
-  .editIcon {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-  }
-  
-  .profileInfo {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .userName {
-    margin-top: 50px;
-    font-size: 1.8rem;
-    font-weight: bold;
-  }
-  
-  .aboutSection {
-    padding: 20px;
-    font-size: 1rem;
-    color: #555;
-  }
-  
-  .readMoreBtn {
-    background: none;
-    border: none;
-    color: #007bff;
-    cursor: pointer;
-    font-size: 0.9rem;
-  }
-  
-  .postsSection {
-    padding: 20px;
-  }
-  
-  .post {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    padding: 15px;
-    background-color: #f9f9f9;
-  }
-  
-  .postHeader {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .postHeader img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%; /* Faz a imagem ser circular */
-    margin-right: 10px;
-  }
-  
-  .coverPhotoLabel {
-    cursor: pointer;
-    display: block;
-  }
-  
-  .profilePhotoContainer label {
-    cursor: pointer;
-  }
-  
-  /* Ajuste para as imagens de banner */
-  .bannerPhoto,
-  .coverPhoto,
-  .profilePhoto {
-    border-radius: 50%; /* Aplica o arredondamento a todas as imagens */
-  }
-  
-  .bannerPhoto {
-    width: 100%;
-    height: 200px; /* Defina a altura do banner */
-    object-fit: cover;
-    border-radius: 10px; /* Mantém uma aparência arredondada */
-  }
-  
+
+
+
+.criarButton {
+  padding: 8px 16px;
+  background-color: #14af00;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.criarButton:hover {
+  background-color: #045b20;
+}
+
+.connectButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border-radius: 20px; /* Bordas arredondadas */
+  background-color: #0077d1; /* Cor do botão de conectar */
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.connectButton:hover {
+  background-color: #0544f4;
+}
+
+
+.banner {
+  position: relative;
+  width: 100%;
+  height: 250px;
+}
+
+.coverPhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px; /* Opção para cantos arredondados, se preferir */
+}
+
+.profilePhotoContainer {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  bottom: -70px;
+  left: 20px;
+}
+
+.profilePhoto {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* Faz a imagem ser circular */
+  border: 3px solid white;
+  object-fit: cover; /* Mantém a proporção da imagem */
+}
+
+.editIcon {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.profileInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.userName {
+  margin-top: 50px;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.aboutSection {
+  padding: 20px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.readMoreBtn {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.postsSection {
+  padding: 20px;
+}
+
+.post {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #f9f9f9;
+}
+
+.postHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.postHeader img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Faz a imagem ser circular */
+  margin-right: 10px;
+}
+
+.coverPhotoLabel {
+  cursor: pointer;
+  display: block;
+}
+
+.profilePhotoContainer label {
+  cursor: pointer;
+}
+
+/* Ajuste para as imagens de banner */
+.bannerPhoto,
+.coverPhoto,
+.profilePhoto {
+  border-radius: 50%; /* Aplica o arredondamento a todas as imagens */
+}
+
+.bannerPhoto {
+  width: 100%;
+  height: 280px; /* Defina a altura do banner */
+  object-fit: cover;
+  border-radius: 10px; /* Mantém uma aparência arredondada */
+}

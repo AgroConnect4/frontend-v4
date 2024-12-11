@@ -1,60 +1,122 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./Perfil.module.css";
 import BotaoTopo from "../../components/BotaoTopo/BotaoTopo";
 import Footer from "../../components/Footer/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons"; // Importação correta
+import { jwtDecode } from "jwt-decode";
 
 const Perfil = () => {
   const navigate = useNavigate();
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [profilePhoto, setProfilePhoto] = useState("/img/profile-photo.jpg");
-  const [coverPhoto, setCoverPhoto] = useState("/img/cover-photo.jpg");
-  const [bannerPhoto, setBannerPhoto] = useState("/img/banner.jpg");
-  const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState("kamily simeao");
-  const [description, setDescription] = useState("ooooi kskshhrhrhrhieiduydud");
+  const [profilePhoto, setProfilePhoto] = useState(""); // Fallback para imagem de perfil
+  const [coverPhoto, setCoverPhoto] = useState("");    // Fallback para imagem de capa
+  const [name, setName] = useState("Carregando...");
+  const [description, setDescription] = useState("");
+  const [posts, setPosts] = useState([]); // State para os posts
+  const [events, setEvents] = useState([]); // State para os eventos
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const handleProfilePhotoUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setProfilePhoto(URL.createObjectURL(file));
-    }
-  };
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+  if (!token) {
+    navigate('/login');
+    return;
+  }
 
-  const handleCoverPhotoUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setCoverPhoto(URL.createObjectURL(file));
-    }
-  };
+  try {
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
 
-  const handleBannerPhotoUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setBannerPhoto(URL.createObjectURL(file));
+    if (!userId) {
+      setError('Não foi possível recuperar o ID do usuário.');
+      return;
     }
+
+    const fetchUserProfile = async () => {
+
+      try {
+        const response = await fetch('https://localhost:7297/api/UserProfile/myprofile', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erro ao carregar o perfil: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        
+        // Exibindo os dados de perfil no console
+        console.log("Dados do Perfil:", data);
+
+        setName(data.name || "Preencha seu nome");
+        setDescription(data.description || "Adicione uma descrição");
+
+        // Verificando se as imagens estão em Base64 e atualizando o estado
+        setProfilePhoto(data.profilePicture ? data.profilePicture : "/img/default-profile.jpg");
+        setCoverPhoto(data.coverPicture ? data.coverPicture : "/img/default-cover.jpg");
+
+        // Buscar posts e eventos criados
+        await fetchUserPostsAndEvents(data.userId); // Assume que o userId está no objeto data
+
+      } catch (error) {
+        setError(error.message);
+        console.error("Error fetching user profile:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Função para buscar postagens e eventos criados
+    const fetchUserPostsAndEvents = async (userId) => {
+      try {
+
+        // Fetching posts
+        const postsResponse = await fetch(`https://localhost:7297/api/Posts/user/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+        });
+        if (postsResponse.ok) {
+          const postsData = await postsResponse.json();
+          setPosts(postsData);
+        } else {
+          throw new Error('Erro ao carregar as postagens');
+        }
+
+        // Fetching events
+        const eventsResponse = await fetch(`https://localhost:7297/api/Events/${userId}/events/created`, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+        });
+        if (eventsResponse.ok) {
+          const eventsData = await eventsResponse.json();
+          setEvents(eventsData);
+        } else {
+          throw new Error('Erro ao carregar os eventos');
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchUserProfile();
+  } catch (error) {
+    setError('Erro ao decodificar o token.');
+    console.error(error);
+  }
+}, [navigate]);
+
+  const handleEditProfileClick = () => {
+    navigate("/editarperfil"); // Redireciona para a página de edição de perfil
   };
 
   const handleCriarClick = () => {
     navigate("/criar");
-  };
-
-  const toggleText = () => {
-    setIsExpanded(!isExpanded);
-  };
-
-  const toggleEditing = () => {
-    setIsEditing(!isEditing);
-  };
-
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
   };
 
   return (
@@ -62,100 +124,67 @@ const Perfil = () => {
       <div className={style.container}>
         <div className={style.banner}>
           <label htmlFor="banner-upload" className={style.bannerPhotoLabel}>
-            <img className={style.bannerPhoto} src={bannerPhoto} alt="Banner do perfil" />
+            <img className={style.bannerPhoto} src={coverPhoto} alt="Capa do perfil" />
           </label>
-          <input
-            type="file"
-            id="banner-upload"
-            style={{ display: "none" }}
-            onChange={handleBannerPhotoUpload}
-            accept="image/*"
-          />
-          <label htmlFor="cover-upload" className={style.coverPhotoLabel}>
-            <img className={style.coverPhoto} src={coverPhoto} alt="Capa do perfil" />
+
+          <label htmlFor="profile-upload" className={style.profilePhotoContainer}>
+            <img className={style.profilePhoto} src={profilePhoto} alt="Foto de perfil" />
           </label>
-          <input
-            type="file"
-            id="cover-upload"
-            style={{ display: "none" }}
-            onChange={handleCoverPhotoUpload}
-            accept="image/*"
-          />
-          <div className={style.profilePhotoContainer}>
-            <label htmlFor="profile-upload">
-              <img className={style.profilePhoto} src={profilePhoto} alt="Foto de perfil" />
-            </label>
-            <input
-              type="file"
-              id="profile-upload"
-              style={{ display: "none" }}
-              onChange={handleProfilePhotoUpload}
-              accept="image/*"
-            />
-          </div>
-          <img
-            className={style.editIcon}
-            src="/img/edit-icon.png"
-            alt="Editar perfil"
-            onClick={toggleEditing}
-          />
         </div>
 
         <div className={style.profileInfo}>
-          {isEditing ? (
-            <>
-              <input
-                type="text"
-                value={name}
-                onChange={handleNameChange}
-                className={style.editInput}
-              />
-              <textarea
-                value={description}
-                onChange={handleDescriptionChange}
-                className={style.editTextarea}
-              />
-              <button onClick={toggleEditing} className={style.saveButton}>
-                Salvar
-              </button>
-            </>
-          ) : (
-            <>
-              <h1 className={style.userName}>{name}</h1>
-              {/* Botão de Conectar */}
-              <button className={style.connectButton}>
-                <FontAwesomeIcon icon={faPlus} /> Conectar
-              </button>
-            </>
-          )}
+          <h1 className={style.userName}>{name}</h1>
+          {/* Botão de Editar Perfil */}
+          <button onClick={handleEditProfileClick} className={style.editButton}>
+            <FontAwesomeIcon icon={faEdit} /> Editar perfil
+          </button>
         </div>
 
         <div className={style.aboutSection}>
-          <p>
-            {isExpanded ? description : description.slice(0, 50) + "..."}
-          </p>
-          <button onClick={toggleText} className={style.readMoreBtn}>
-            {isExpanded ? "Ler menos" : "Ler mais"}
-          </button>
+          <p>{description}</p>
         </div>
 
+        {/* Seção de Postagens */}
         <div className={style.postsSection}>
-          <h2>Postagens</h2>
-          {/* Botão "Criar publicação" dentro da seção de postagens */}
-          <button onClick={handleCriarClick} className={style.criarButton}>
+        <button onClick={handleCriarClick} className={style.criarButton}>
             Criar publicação
           </button>
-          <div className={style.post}>
-            <div className={style.postHeader}>
-              <img src={profilePhoto} alt="Foto de perfil" />
-              <div>
-                <h3>{name}</h3>
-                <p>09/09/09</p>
+          <h2>Postagens</h2>
+          
+          {posts.length > 0 ? (
+            posts.map((post) => (
+              <div key={post.id} className={style.post}>
+                <div className={style.postHeader}>
+                  <img src={profilePhoto} alt="Foto de perfil" />
+                  <div>
+                    <h3>{name}</h3>
+                    <p>{post.date}</p> {/* Assumindo que post.date contém a data */}
+                  </div>
+                </div>
+                <p>{post.content}</p>
+                <img src={post.imageUrl} alt="Imagem do post" />
               </div>
-            </div>
-            <p>Conteúdo da postagem...</p>
-            <img src="https://avatars.mds.yandex.net/i?id=8ddad3eb1a86cab8fcf8fef40262d064cb252527-7716570-images-thumbs&n=13" alt="" />
-          </div>
+            ))
+          ) : (
+            <p>Você não tem postagens ainda.</p>
+          )}
+        </div>
+
+        {/* Seção de Eventos Criados */}
+        <div className={style.eventsSection}>
+          <h2>Eventos Criados</h2>
+          {events.length > 0 ? (
+            events.map((event) => (
+              <div key={event.id} className={style.event}>
+                <h3>{event.name}</h3>
+                <p>{event.description}</p>
+                <p>{event.date}</p> {/* Assumindo que event.date contém a data */}
+                <img src={event.imageUrl} alt="Imagem do evento" />
+              </div>
+            ))
+          ) : (
+            <p>Você não criou eventos ainda.</p>
+          )}
         </div>
       </div>
 
